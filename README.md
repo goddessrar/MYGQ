@@ -843,56 +843,50 @@ async function descargarPDF() {
 
   // Ocultar controles no imprimibles
   document.querySelectorAll('.btn-agregar, .btn-eliminar, .btn-quitar-plano').forEach(el => el.style.visibility = 'hidden');
-  document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display='none');
+  document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = 'none');
 
   try {
-    const canvas = await html2canvas(document.getElementById('documento'), {
+    const doc = document.getElementById('documento');
+
+    const canvas = await html2canvas(doc, {
       scale: 2,
       useCORS: true,
       backgroundColor: '#ffffff',
-      logging: false
+      logging: false,
+      width: doc.scrollWidth,
+      height: doc.scrollHeight,
+      windowWidth: doc.scrollWidth,
+      windowHeight: doc.scrollHeight
     });
 
     const { jsPDF } = window.jspdf;
-    const imgData = canvas.toDataURL('image/jpeg', 0.92);
+
+    // Convertir píxeles del canvas a mm (96dpi → mm: px * 25.4 / (96 * scale))
+    const scale = 2;
+    const dpi = 96;
+    const pxToMm = px => px * 25.4 / (dpi * scale);
+
+    const pdfW = pxToMm(canvas.width);
+    const pdfH = pxToMm(canvas.height);
+
     const pdf = new jsPDF({
-      orientation: 'portrait',
+      orientation: pdfW > pdfH ? 'landscape' : 'portrait',
       unit: 'mm',
-      format: 'a4'
+      format: [pdfW, pdfH]   // tamaño exacto al contenido
     });
 
-    const pdfW = pdf.internal.pageSize.getWidth();
-    const pdfH = pdf.internal.pageSize.getHeight();
-    const canvasAspect = canvas.height / canvas.width;
-    const imgH = pdfW * canvasAspect;
-
-    if (imgH <= pdfH) {
-      pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, imgH);
-    } else {
-      // Paginar si es muy largo
-      let yOffset = 0;
-      while (yOffset < canvas.height) {
-        const pageCanvas = document.createElement('canvas');
-        pageCanvas.width = canvas.width;
-        pageCanvas.height = Math.min(canvas.width * (pdfH / pdfW), canvas.height - yOffset);
-        const ctx = pageCanvas.getContext('2d');
-        ctx.drawImage(canvas, 0, -yOffset);
-        const pageData = pageCanvas.toDataURL('image/jpeg', 0.92);
-        if (yOffset > 0) pdf.addPage();
-        pdf.addImage(pageData, 'JPEG', 0, 0, pdfW, pdfH);
-        yOffset += pageCanvas.height;
-      }
-    }
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
 
     const num = document.getElementById('inputNumero').value || '001';
     const cliente = document.getElementById('cliente').value || 'cliente';
     pdf.save(`Recibo-${num}-${cliente}.pdf`);
 
-  } catch(err) {
+  } catch (err) {
     alert('Error al generar el PDF: ' + err.message);
   } finally {
     document.querySelectorAll('.btn-agregar, .btn-eliminar, .btn-quitar-plano').forEach(el => el.style.visibility = '');
-    document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display='');
+    document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = '');
     btn.textContent = '⬇ Descargar PDF';
     btn.disabled = false;
   }
