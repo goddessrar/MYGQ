@@ -848,31 +848,38 @@ async function descargarPDF() {
   try {
     const doc = document.getElementById('documento');
 
+    // Forzar ancho A4 exacto (794px a 96dpi) durante la captura
+    const A4_PX = 794;
+    const prevStyle = doc.getAttribute('style') || '';
+    doc.style.cssText += ';width:' + A4_PX + 'px!important;max-width:' + A4_PX + 'px!important;border-radius:0!important;';
+
+    // Pausa para que el navegador re-renderice con el nuevo ancho
+    await new Promise(r => setTimeout(r, 100));
+
     const canvas = await html2canvas(doc, {
       scale: 2,
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false,
-      width: doc.scrollWidth,
+      width: A4_PX,
       height: doc.scrollHeight,
-      windowWidth: doc.scrollWidth,
+      windowWidth: A4_PX,
       windowHeight: doc.scrollHeight
     });
 
+    // Restaurar estilos originales
+    doc.setAttribute('style', prevStyle);
+
     const { jsPDF } = window.jspdf;
 
-    // Convertir píxeles del canvas a mm (96dpi → mm: px * 25.4 / (96 * scale))
-    const scale = 2;
-    const dpi = 96;
-    const pxToMm = px => px * 25.4 / (dpi * scale);
-
-    const pdfW = pxToMm(canvas.width);
-    const pdfH = pxToMm(canvas.height);
+    // Ancho fijo A4 (210mm), alto proporcional al contenido — una sola hoja
+    const pdfW = 210;
+    const pdfH = (canvas.height / canvas.width) * pdfW;
 
     const pdf = new jsPDF({
-      orientation: pdfW > pdfH ? 'landscape' : 'portrait',
+      orientation: 'portrait',
       unit: 'mm',
-      format: [pdfW, pdfH]   // tamaño exacto al contenido
+      format: [pdfW, pdfH]
     });
 
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
