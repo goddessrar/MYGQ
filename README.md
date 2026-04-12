@@ -678,16 +678,24 @@
       <div class="totales-box">
         <div class="total-row">
           <span class="lbl">Subtotal</span>
-          <span class="val" id="subtotalDisplay">$ 0,00</span>
+          <span class="val">
+            <input type="text" id="subtotalInput" placeholder="$ 0,00"
+              style="font-size:14px;font-weight:700;color:var(--texto);width:140px;"
+              oninput="subtotalManual = true; recalcularDesdeSubtotal()"/>
+          </span>
         </div>
         <div class="total-row">
           <span class="lbl">Descuento</span>
-          <span class="val"><input type="text" id="descuento" placeholder="$ 0" oninput="calcularTotales()"/></span>
+          <span class="val"><input type="text" id="descuento" placeholder="$ 0" oninput="recalcularDesdeSubtotal()"/></span>
         </div>
         <div class="separador"></div>
         <div class="total-row grande">
           <span class="lbl">TOTAL</span>
-          <span class="val" id="totalDisplay">$ 0,00</span>
+          <span class="val">
+            <input type="text" id="totalInput" placeholder="$ 0,00"
+              style="font-size:20px;font-weight:700;color:var(--verde);width:150px;"
+              oninput="totalManual = true; calcularRestante()"/>
+          </span>
         </div>
         <div class="separador"></div>
         <div class="total-row">
@@ -696,7 +704,10 @@
         </div>
         <div class="total-row grande">
           <span class="lbl" style="color:#c0392b">Resta abonar</span>
-          <span class="val" id="restaDisplay" style="color:#c0392b">$ 0,00</span>
+          <span class="val">
+            <input type="text" id="restaInput" placeholder="$ 0,00" readonly
+              style="font-size:20px;font-weight:700;color:#c0392b;width:150px;cursor:default;"/>
+          </span>
         </div>
       </div>
     </div>
@@ -727,22 +738,35 @@
     <div class="footer-contacto">
       <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:0.05em;">CONTACTO</div>
 
-      <!-- Teléfono 1: en edición = input; en PDF = link a WA -->
-      <div class="linea" id="linea-tel1-edit">
-        📞 <input type="text" placeholder="Teléfono / WhatsApp 1" id="tel1"/>
+      <!-- Los links se actualizan en tiempo real al escribir en los inputs ocultos -->
+      <div class="linea">
+        <span id="link-tel1"></span>
+        <input type="text" id="tel1" placeholder="Teléfono / WhatsApp 1"
+          style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/>
       </div>
-      <!-- Teléfono 2 -->
-      <div class="linea" id="linea-tel2-edit">
-        📞 <input type="text" placeholder="Teléfono / WhatsApp 2" id="tel2"/>
+      <div class="linea">
+        <span id="link-tel2"></span>
+        <input type="text" id="tel2" placeholder="Teléfono / WhatsApp 2"
+          style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/>
       </div>
-      <!-- Dirección -->
-      <div class="linea" id="linea-dir-edit">
-        📍 <input type="text" placeholder="Dirección del local" id="direccionLocal"/>
+      <div class="linea">
+        <span id="link-dir"></span>
+        <input type="text" id="direccionLocal" placeholder="Dirección del local"
+          style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/>
       </div>
-      <!-- Email -->
-      <div class="linea" id="linea-email-edit">
-        ✉️ <input type="text" placeholder="Email" id="emailLocal"/>
+      <div class="linea">
+        <span id="link-email"></span>
+        <input type="text" id="emailLocal" placeholder="Email"
+          style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/>
       </div>
+
+      <!-- Botón "Editar contacto" visible solo fuera del PDF -->
+      <button id="btnEditarContacto" onclick="abrirEditorContacto()"
+        style="margin-top:10px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+               background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;
+               border-radius:6px;padding:5px 12px;cursor:pointer;letter-spacing:0.04em;">
+        ✏️ Editar datos de contacto
+      </button>
     </div>
     <div class="footer-firma">
       Mármoles y Granitos Quilmes<br/>
@@ -750,7 +774,44 @@
     </div>
   </div>
 
-</div><!-- fin #documento -->
+  <!-- MODAL EDITOR DE CONTACTO -->
+  <div id="modalContacto" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:16px;padding:32px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:'Montserrat',sans-serif;">
+      <div style="font-size:15px;font-weight:700;color:var(--texto);margin-bottom:20px;">✏️ Datos de contacto del local</div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gris);display:block;margin-bottom:4px;">📞 WhatsApp 1</label>
+          <input id="m-tel1" type="text" placeholder="+54 11 0000-0000"
+            style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:500;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/>
+        </div>
+        <div>
+          <label style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gris);display:block;margin-bottom:4px;">📞 WhatsApp 2</label>
+          <input id="m-tel2" type="text" placeholder="+54 11 0000-0000"
+            style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:500;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/>
+        </div>
+        <div>
+          <label style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gris);display:block;margin-bottom:4px;">📍 Dirección</label>
+          <input id="m-dir" type="text" placeholder="Calle, número, localidad"
+            style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:500;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/>
+        </div>
+        <div>
+          <label style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gris);display:block;margin-bottom:4px;">✉️ Email</label>
+          <input id="m-email" type="text" placeholder="info@marmoleria.com"
+            style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:500;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:24px;justify-content:flex-end;">
+        <button onclick="cerrarEditorContacto(false)"
+          style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;background:#fff;color:var(--gris);border:1.5px solid var(--borde);border-radius:8px;padding:10px 20px;cursor:pointer;">
+          Cancelar
+        </button>
+        <button onclick="cerrarEditorContacto(true)"
+          style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;background:var(--verde);color:#fff;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
 
 <script>
 // ===== NÚMERO DE RECIBO: default = fecha de hoy DDMMAA =====
@@ -767,7 +828,6 @@ window.onload = () => {
   const hoy = new Date().toISOString().split('T')[0];
   document.getElementById('fecha').value = hoy;
 
-  // N° de recibo por defecto = fecha
   const numDefault = numReciboPorDefecto();
   document.getElementById('inputNumero').value = numDefault;
   document.getElementById('numDisplay').textContent = numDefault;
@@ -775,19 +835,17 @@ window.onload = () => {
   agregarFila();
   agregarFila();
   cargarStorage();
+  actualizarLinksFooter();
 };
 
 // ===== WHATSAPP CLIENTE =====
 function abrirWhatsAppCliente() {
   const tel = document.getElementById('telCliente')?.value || '';
   const limpio = tel.replace(/[^\d+]/g, '');
-  if (!limpio) {
-    alert('Primero completá el Teléfono cliente en la banda superior.');
-    return;
-  }
+  if (!limpio) { alert('Primero completá el Teléfono cliente en la banda superior.'); return; }
   const cliente = document.getElementById('cliente')?.value || '';
   const trabajo = document.getElementById('trabajo')?.value || '';
-  const resta   = document.getElementById('restaDisplay')?.textContent || '';
+  const resta   = document.getElementById('restaInput')?.value || '';
   const num     = document.getElementById('inputNumero')?.value || '';
   let msg = '¡Hola' + (cliente ? ' ' + cliente : '') + '! Te enviamos tu recibo N°' + num + ' de Mármoles y Granitos Quilmes.';
   if (trabajo) msg += '\nTrabajo: ' + trabajo;
@@ -798,17 +856,13 @@ function abrirWhatsAppCliente() {
 // ===== GMAIL CLIENTE =====
 function enviarGmail() {
   const mailDest = document.getElementById('mailCliente')?.value || '';
-  if (!mailDest) {
-    alert('Primero completá el Mail cliente en la banda superior.');
-    return;
-  }
+  if (!mailDest) { alert('Primero completá el Mail cliente en la banda superior.'); return; }
   const cliente = document.getElementById('cliente')?.value || '';
   const num     = document.getElementById('inputNumero')?.value || '';
   const trabajo = document.getElementById('trabajo')?.value || '';
-  const total   = document.getElementById('totalDisplay')?.textContent || '';
+  const total   = document.getElementById('totalInput')?.value || '';
   const subject = encodeURIComponent('Recibo N°' + num + ' – Mármoles y Granitos Quilmes');
-  let body = 'Hola' + (cliente ? ' ' + cliente : '') + ',\n\n';
-  body += 'Te adjuntamos el recibo N°' + num + ' de Mármoles y Granitos Quilmes.\n';
+  let body = 'Hola' + (cliente ? ' ' + cliente : '') + ',\n\nTe adjuntamos el recibo N°' + num + ' de Mármoles y Granitos Quilmes.\n';
   if (trabajo) body += 'Trabajo: ' + trabajo + '\n';
   if (total)   body += 'Total: ' + total + '\n';
   body += '\nSaludos,\nMármoles y Granitos Quilmes';
@@ -821,7 +875,7 @@ function setEstado(tipo, btn) {
   btn.classList.add('activo');
 }
 
-// ===== FILAS TABLA (sin precio unitario) =====
+// ===== FILAS TABLA =====
 let filaId = 0;
 function agregarFila() {
   filaId++;
@@ -832,7 +886,7 @@ function agregarFila() {
   tr.innerHTML =
     `<td><input type="text" placeholder="Descripción del ítem"/></td>
      <td><input type="text" placeholder="Ej: 1.20m x 0.60m"/></td>
-     <td class="monto"><input type="text" id="sub-${fid}" placeholder="0" oninput="calcularSubtotalFila(this, ${fid})" style="font-weight:700;color:var(--verde);text-align:right;"/></td>
+     <td class="monto"><input type="text" id="sub-${fid}" placeholder="0" oninput="recalcularDesdeFilas()" style="font-weight:700;color:var(--verde);text-align:right;"/></td>
      <td><button class="btn-eliminar" onclick="eliminarFila(${fid})">✕</button></td>`;
   tbody.appendChild(tr);
 }
@@ -840,11 +894,7 @@ function agregarFila() {
 function eliminarFila(id) {
   const fila = document.getElementById('fila-' + id);
   if (fila) fila.remove();
-  calcularTotales();
-}
-
-function calcularSubtotalFila(input, id) {
-  calcularTotales();
+  recalcularDesdeFilas();
 }
 
 // ===== CÁLCULOS =====
@@ -857,25 +907,38 @@ function formatMonto(n) {
   return '$ ' + n.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
-function calcularTotales() {
+// Flags para saber si el usuario pisó los valores manualmente
+let subtotalManual = false;
+let totalManual    = false;
+
+// Se llama cuando cambia un subtotal de fila — recalcula hacia arriba SI no hay override manual
+function recalcularDesdeFilas() {
+  subtotalManual = false;
+  totalManual    = false;
   let sub = 0;
   document.querySelectorAll('#tablaItems tr').forEach(tr => {
-    const subInput = tr.querySelector('td.monto input');
-    if (subInput) sub += parseMonto(subInput.value);
+    const inp = tr.querySelector('td.monto input');
+    if (inp) sub += parseMonto(inp.value);
   });
-  document.getElementById('subtotalDisplay').textContent = formatMonto(sub);
-  const desc  = parseMonto(document.getElementById('descuento').value);
-  const total = Math.max(0, sub - desc);
-  document.getElementById('totalDisplay').textContent = formatMonto(total);
+  document.getElementById('subtotalInput').value = formatMonto(sub);
+  recalcularDesdeSubtotal();
+}
+
+// Se llama cuando cambia subtotal o descuento
+function recalcularDesdeSubtotal() {
+  if (!totalManual) {
+    const sub  = parseMonto(document.getElementById('subtotalInput').value);
+    const desc = parseMonto(document.getElementById('descuento').value);
+    document.getElementById('totalInput').value = formatMonto(Math.max(0, sub - desc));
+  }
   calcularRestante();
 }
 
+// Se llama cuando cambia abonado o total (manual)
 function calcularRestante() {
-  const totalTxt = document.getElementById('totalDisplay').textContent;
-  const total    = parseMonto(totalTxt.replace('$',''));
-  const abonado  = parseMonto(document.getElementById('abonado').value);
-  const resta    = Math.max(0, total - abonado);
-  document.getElementById('restaDisplay').textContent = formatMonto(resta);
+  const total   = parseMonto(document.getElementById('totalInput').value);
+  const abonado = parseMonto(document.getElementById('abonado').value);
+  document.getElementById('restaInput').value = formatMonto(Math.max(0, total - abonado));
 }
 
 // ===== PLANOS =====
@@ -890,7 +953,6 @@ function cargarPlano(e) {
     document.getElementById('btnQuitarPlano').style.display = 'inline-block';
     document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = 'none');
     document.querySelector('.planos-zona .icono').style.display = 'none';
-    // Quitar tag (opcional) y marcar que hay imagen
     document.getElementById('tagOpcional').style.display = 'none';
     document.getElementById('seccionPlanos').classList.remove('sin-imagen');
   };
@@ -905,34 +967,89 @@ function quitarPlano(e) {
   document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = '');
   document.querySelector('.planos-zona .icono').style.display = '';
   document.getElementById('inputPlano').value = '';
-  // Restaurar tag (opcional) y marcar sin imagen
   document.getElementById('tagOpcional').style.display = '';
   document.getElementById('seccionPlanos').classList.add('sin-imagen');
 }
+
+// ===== FOOTER LINKS (siempre visibles y clicables) =====
+function actualizarLinksFooter() {
+  const tel1  = document.getElementById('tel1').value;
+  const tel2  = document.getElementById('tel2').value;
+  const dir   = document.getElementById('direccionLocal').value;
+  const email = document.getElementById('emailLocal').value;
+
+  function telHTML(num) {
+    const limpio = num.replace(/[^\d+]/g, '');
+    if (!limpio) return '<span style="color:rgba(255,255,255,0.3);font-size:12px;">📞 Sin número cargado</span>';
+    return `<a href="https://wa.me/${limpio.replace('+','')}" target="_blank" class="footer-link">📞 ${num}</a>`;
+  }
+  function dirHTML(addr) {
+    if (!addr) return '<span style="color:rgba(255,255,255,0.3);font-size:12px;">📍 Sin dirección cargada</span>';
+    return `<a href="https://maps.google.com/?q=${encodeURIComponent(addr)}" target="_blank" class="footer-link">📍 ${addr}</a>`;
+  }
+  function emailHTML(mail) {
+    if (!mail) return '<span style="color:rgba(255,255,255,0.3);font-size:12px;">✉️ Sin email cargado</span>';
+    return `<a href="mailto:${mail}" class="footer-link">✉️ ${mail}</a>`;
+  }
+
+  document.getElementById('link-tel1').innerHTML  = telHTML(tel1);
+  document.getElementById('link-tel2').innerHTML  = telHTML(tel2);
+  document.getElementById('link-dir').innerHTML   = dirHTML(dir);
+  document.getElementById('link-email').innerHTML = emailHTML(email);
+}
+
+// ===== MODAL EDITOR CONTACTO =====
+function abrirEditorContacto() {
+  document.getElementById('m-tel1').value  = document.getElementById('tel1').value;
+  document.getElementById('m-tel2').value  = document.getElementById('tel2').value;
+  document.getElementById('m-dir').value   = document.getElementById('direccionLocal').value;
+  document.getElementById('m-email').value = document.getElementById('emailLocal').value;
+  const modal = document.getElementById('modalContacto');
+  modal.style.display = 'flex';
+}
+
+function cerrarEditorContacto(guardar) {
+  if (guardar) {
+    document.getElementById('tel1').value          = document.getElementById('m-tel1').value;
+    document.getElementById('tel2').value          = document.getElementById('m-tel2').value;
+    document.getElementById('direccionLocal').value = document.getElementById('m-dir').value;
+    document.getElementById('emailLocal').value    = document.getElementById('m-email').value;
+    // Persistir en localStorage
+    ['tel1','tel2','direccionLocal','emailLocal'].forEach(id => {
+      localStorage.setItem('mgq_' + id, document.getElementById(id).value);
+    });
+    actualizarLinksFooter();
+  }
+  document.getElementById('modalContacto').style.display = 'none';
+}
+
+// Cerrar modal al hacer click fuera
+document.getElementById('modalContacto').addEventListener('click', function(e) {
+  if (e.target === this) cerrarEditorContacto(false);
+});
 
 // ===== LIMPIAR =====
 function limpiarTodo() {
   if (!confirm('¿Limpiar todos los campos?')) return;
   document.getElementById('tablaItems').innerHTML = '';
   filaId = 0;
+  subtotalManual = false;
+  totalManual    = false;
   agregarFila();
   agregarFila();
   ['fecha','cliente','telCliente','mailCliente','trabajo','material','bacha','direccion',
-   'descuento','abonado','observaciones','tel1','tel2','direccionLocal','emailLocal'].forEach(id => {
+   'descuento','abonado','observaciones'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
-  // Resetear n° de recibo al de hoy
+  ['subtotalInput','totalInput','restaInput'].forEach(id => {
+    document.getElementById(id).value = '$ 0,00';
+  });
   const numDefault = numReciboPorDefecto();
   document.getElementById('inputNumero').value = numDefault;
   document.getElementById('numDisplay').textContent = numDefault;
-
-  document.getElementById('subtotalDisplay').textContent = '$ 0,00';
-  document.getElementById('totalDisplay').textContent    = '$ 0,00';
-  document.getElementById('restaDisplay').textContent    = '$ 0,00';
   quitarPlano({stopPropagation:()=>{}});
-  const hoy = new Date().toISOString().split('T')[0];
-  document.getElementById('fecha').value = hoy;
+  document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
 }
 
 // ===== DESCARGAR PDF =====
@@ -941,21 +1058,15 @@ async function descargarPDF() {
   btn.textContent = '⏳ Generando PDF...';
   btn.disabled = true;
 
-  // Ocultar controles no imprimibles
   document.querySelectorAll('.btn-agregar, .btn-eliminar, .btn-quitar-plano').forEach(el => el.style.visibility = 'hidden');
   document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = 'none');
 
-  // Si no hay imagen de plano, ocultar la sección entera temporalmente
-  const seccionPlanos  = document.getElementById('seccionPlanos');
-  const hayImagen      = !seccionPlanos.classList.contains('sin-imagen');
-  if (!hayImagen) seccionPlanos.style.display = 'none';
+  // Ocultar el botón "Editar contacto" y el modal en el PDF
+  document.getElementById('btnEditarContacto').style.display = 'none';
 
-  // Reemplazar inputs del footer por links clicables para PDF
-  const tel1Val  = document.getElementById('tel1').value;
-  const tel2Val  = document.getElementById('tel2').value;
-  const dirVal   = document.getElementById('direccionLocal').value;
-  const emailVal = document.getElementById('emailLocal').value;
-  renderFooterParaPDF(tel1Val, tel2Val, dirVal, emailVal);
+  const seccionPlanos = document.getElementById('seccionPlanos');
+  const hayImagen     = !seccionPlanos.classList.contains('sin-imagen');
+  if (!hayImagen) seccionPlanos.style.display = 'none';
 
   try {
     const doc = document.getElementById('documento');
@@ -982,8 +1093,7 @@ async function descargarPDF() {
     const pdfW = 210;
     const pdfH = (canvas.height / canvas.width) * pdfW;
     const pdf  = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [pdfW, pdfH] });
-    const imgData = canvas.toDataURL('image/jpeg', 0.95);
-    pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
+    pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, pdfW, pdfH);
 
     const num = document.getElementById('inputNumero').value || numReciboPorDefecto();
     pdf.save('MYGQrecibo' + num + '.pdf');
@@ -991,11 +1101,8 @@ async function descargarPDF() {
   } catch (err) {
     alert('Error al generar el PDF: ' + err.message);
   } finally {
-    // Restaurar sección planos
     if (!hayImagen) seccionPlanos.style.display = '';
-    // Restaurar footer editable
-    restaurarFooterEditable(tel1Val, tel2Val, dirVal, emailVal);
-
+    document.getElementById('btnEditarContacto').style.display = '';
     document.querySelectorAll('.btn-agregar, .btn-eliminar, .btn-quitar-plano').forEach(el => el.style.visibility = '');
     document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = '');
     btn.textContent = '⬇ Descargar PDF';
@@ -1003,60 +1110,13 @@ async function descargarPDF() {
   }
 }
 
-// Reemplaza los inputs del footer por spans/links para que queden lindos en el PDF
-function renderFooterParaPDF(tel1, tel2, dir, email) {
-  function telLink(num, label) {
-    const limpio = num.replace(/[^\d+]/g, '');
-    if (!limpio) return '';
-    return `<a href="https://wa.me/${limpio.replace('+','')}" class="footer-link">📞 ${label || num}</a>`;
-  }
-  function mapLink(addr) {
-    if (!addr) return '';
-    return `<a href="https://maps.google.com/?q=${encodeURIComponent(addr)}" class="footer-link">📍 ${addr}</a>`;
-  }
-  function mailLink(mail) {
-    if (!mail) return '';
-    return `<a href="mailto:${mail}" class="footer-link">✉️ ${mail}</a>`;
-  }
-
-  const lineas = [
-    { id:'linea-tel1-edit', html: tel1 ? telLink(tel1, tel1) : '' },
-    { id:'linea-tel2-edit', html: tel2 ? telLink(tel2, tel2) : '' },
-    { id:'linea-dir-edit',  html: dir  ? mapLink(dir) : '' },
-    { id:'linea-email-edit',html: email? mailLink(email) : '' },
-  ];
-  lineas.forEach(({ id, html }) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.dataset.originalHtml = el.innerHTML;
-      el.innerHTML = html;
-    }
-  });
-}
-
-function restaurarFooterEditable(tel1, tel2, dir, email) {
-  ['linea-tel1-edit','linea-tel2-edit','linea-dir-edit','linea-email-edit'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.dataset.originalHtml) {
-      el.innerHTML = el.dataset.originalHtml;
-      delete el.dataset.originalHtml;
-    }
-  });
-}
-
-// ===== STORAGE (persistencia de datos del local) =====
+// ===== STORAGE =====
 function cargarStorage() {
   ['tel1','tel2','direccionLocal','emailLocal'].forEach(id => {
     const val = localStorage.getItem('mgq_' + id);
     if (val) document.getElementById(id).value = val;
   });
 }
-
-['tel1','tel2','direccionLocal','emailLocal'].forEach(id => {
-  document.getElementById(id)?.addEventListener('input', function() {
-    localStorage.setItem('mgq_' + id, this.value);
-  });
-});
 </script>
 </body>
 </html>
