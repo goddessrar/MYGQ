@@ -1118,5 +1118,3 @@ function cargarStorage() {
   });
 }
 </script>
-</body>
-</html>
