@@ -77,6 +77,13 @@
   }
   .btn-wa:hover { background: #1da851; transform: translateY(-1px); }
 
+  .btn-gmail {
+    background: #EA4335;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(234,67,53,0.35);
+  }
+  .btn-gmail:hover { background: #c0392b; transform: translateY(-1px); }
+
   /* ===== HOJA / DOCUMENTO ===== */
   #documento {
     max-width: 860px;
@@ -97,16 +104,10 @@
     gap: 20px;
   }
 
-  .logo-wrap svg {
-    width: 180px;
-    height: auto;
-  }
+  .logo-wrap svg { width: 180px; height: auto; }
   .logo-wrap svg .st0 { fill: #fff !important; }
 
-  .header-right {
-    text-align: right;
-    color: #fff;
-  }
+  .header-right { text-align: right; color: #fff; }
   .header-right h1 {
     font-size: 28px;
     font-weight: 700;
@@ -422,8 +423,8 @@
     transition: all 0.2s;
   }
   .chip-estado.activo.pendiente { background: #fff3cd; border-color: #f0a500; color: #7d5700; }
-  .chip-estado.activo.parcial { background: #cce5ff; border-color: #2b7bdc; color: #1a4a8a; }
-  .chip-estado.activo.pagado { background: #d4edda; border-color: var(--verde); color: var(--verde-oscuro); }
+  .chip-estado.activo.seniado   { background: #cce5ff; border-color: #2b7bdc; color: #1a4a8a; }
+  .chip-estado.activo.pagado    { background: #d4edda; border-color: var(--verde); color: var(--verde-oscuro); }
 
   /* ===== FOOTER ===== */
   .footer {
@@ -439,13 +440,16 @@
   .footer-contacto {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     font-size: 12px;
+    flex: 1;
+    min-width: 0;
   }
   .footer-contacto .linea {
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
   }
   .footer-contacto .linea input {
     font-family: 'Montserrat', sans-serif;
@@ -455,16 +459,30 @@
     border-bottom: 1px solid rgba(255,255,255,0.2);
     color: rgba(255,255,255,0.85);
     outline: none;
-    min-width: 180px;
+    width: 100%;
+    max-width: 260px;
     padding: 2px 0;
     transition: border-color 0.2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .footer-contacto .linea input:focus { border-bottom-color: rgba(255,255,255,0.7); }
+
+  /* Links en footer (modo PDF / descarga) */
+  .footer-link {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .footer-link:hover { color: #fff; text-decoration: underline; }
+
   .footer-firma {
     text-align: right;
     font-size: 11px;
     color: rgba(255,255,255,0.5);
     font-style: italic;
+    flex-shrink: 0;
   }
 
   /* ===== MODO IMPRESIÓN / PDF ===== */
@@ -479,6 +497,7 @@
     tbody td input { background: transparent !important; }
     .planos-zona { border: none; }
     .planos-texto-hint { display: none; }
+    #seccionPlanos.sin-imagen { display: none !important; }
   }
 
   /* ===== RESPONSIVE ===== */
@@ -512,13 +531,13 @@
   <button class="btn btn-secondary" onclick="limpiarTodo()">
     🗑 Limpiar todo
   </button>
-  <button class="btn btn-wa" onclick="abrirWhatsApp(1)" id="btnWa1" title="WhatsApp 1">
+  <button class="btn btn-wa" onclick="abrirWhatsAppCliente()" title="Enviar WhatsApp al cliente">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    WA 1
+    WA Cliente
   </button>
-  <button class="btn btn-wa" onclick="abrirWhatsApp(2)" id="btnWa2" title="WhatsApp 2">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    WA 2
+  <button class="btn btn-gmail" onclick="enviarGmail()" title="Enviar por Gmail al cliente">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+    Gmail Cliente
   </button>
   <button class="btn btn-primary" onclick="descargarPDF()">
     ⬇ Descargar PDF
@@ -531,7 +550,6 @@
   <!-- HEADER -->
   <div class="header">
     <div class="logo-wrap">
-      <!-- SVG LOGO MÁRMOLES Y GRANITOS QUILMES -->
       <svg version="1.1" viewBox="0 0 428.82 415.31" xmlns="http://www.w3.org/2000/svg">
         <style>.st0{fill:#ffffff;}</style>
         <g>
@@ -574,7 +592,9 @@
       <h1>Recibo</h1>
       <div class="num-recibo">N°&nbsp;<span id="numDisplay">–</span></div>
       <div class="badge-num">
-        <input id="inputNumero" type="text" placeholder="001" style="background:transparent;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:600;width:80px;text-align:center;outline:none;" oninput="document.getElementById('numDisplay').textContent=this.value||'–'"/>
+        <input id="inputNumero" type="text" placeholder="120426"
+          style="background:transparent;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:600;width:90px;text-align:center;outline:none;"
+          oninput="document.getElementById('numDisplay').textContent=this.value||'–'"/>
       </div>
     </div>
   </div>
@@ -594,10 +614,14 @@
       <input type="text" id="telCliente" placeholder="+54 11 0000-0000"/>
     </div>
     <div class="banda-item">
+      <label>Mail cliente</label>
+      <input type="email" id="mailCliente" placeholder="cliente@email.com"/>
+    </div>
+    <div class="banda-item">
       <label>Estado de pago</label>
       <div class="estado-pago" style="margin-top:4px;">
         <button class="chip-estado pendiente activo" onclick="setEstado('pendiente',this)">Pendiente</button>
-        <button class="chip-estado parcial" onclick="setEstado('parcial',this)">Parcial</button>
+        <button class="chip-estado seniado" onclick="setEstado('seniado',this)">Señado</button>
         <button class="chip-estado pagado" onclick="setEstado('pagado',this)">Pagado</button>
       </div>
     </div>
@@ -629,17 +653,16 @@
       </div>
     </div>
 
-    <!-- DETALLES / ITEMS -->
+    <!-- DETALLES / ITEMS — sin columna Precio unit. -->
     <div>
       <div class="seccion-titulo">🔩 Detalle de trabajos</div>
       <div class="tabla-wrap">
         <table>
           <thead>
             <tr>
-              <th style="width:40%">Descripción</th>
-              <th style="width:20%">Medidas / cantidad</th>
-              <th style="width:20%">Precio unit.</th>
-              <th style="width:15%;text-align:right">Subtotal</th>
+              <th style="width:50%">Descripción</th>
+              <th style="width:25%">Medidas / cantidad</th>
+              <th style="width:20%;text-align:right">Subtotal</th>
               <th style="width:5%"></th>
             </tr>
           </thead>
@@ -678,9 +701,9 @@
       </div>
     </div>
 
-    <!-- PLANOS -->
-    <div>
-      <div class="seccion-titulo">📐 Planos / croquis (opcional)</div>
+    <!-- PLANOS — el título cambia según haya imagen o no; la sección se oculta en PDF si no hay imagen -->
+    <div id="seccionPlanos" class="sin-imagen">
+      <div class="seccion-titulo" id="tituloPlanos">📐 Planos / croquis <span id="tagOpcional" style="font-weight:400;text-transform:none;letter-spacing:0;color:#aaa;font-size:9px;">(opcional)</span></div>
       <div class="planos-zona" onclick="document.getElementById('inputPlano').click()">
         <div class="icono">🗺</div>
         <div class="texto planos-texto-hint">Hacé clic para subir el plano (PNG o SVG)</div>
@@ -703,17 +726,22 @@
   <div class="footer">
     <div class="footer-contacto">
       <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:0.05em;">CONTACTO</div>
-      <div class="linea">
+
+      <!-- Teléfono 1: en edición = input; en PDF = link a WA -->
+      <div class="linea" id="linea-tel1-edit">
         📞 <input type="text" placeholder="Teléfono / WhatsApp 1" id="tel1"/>
       </div>
-      <div class="linea">
+      <!-- Teléfono 2 -->
+      <div class="linea" id="linea-tel2-edit">
         📞 <input type="text" placeholder="Teléfono / WhatsApp 2" id="tel2"/>
       </div>
-      <div class="linea">
+      <!-- Dirección -->
+      <div class="linea" id="linea-dir-edit">
         📍 <input type="text" placeholder="Dirección del local" id="direccionLocal"/>
       </div>
-      <div class="linea">
-        ✉️ <input type="text" placeholder="Email" id="email"/>
+      <!-- Email -->
+      <div class="linea" id="linea-email-edit">
+        ✉️ <input type="text" placeholder="Email" id="emailLocal"/>
       </div>
     </div>
     <div class="footer-firma">
@@ -725,36 +753,66 @@
 </div><!-- fin #documento -->
 
 <script>
+// ===== NÚMERO DE RECIBO: default = fecha de hoy DDMMAA =====
+function numReciboPorDefecto() {
+  const hoy = new Date();
+  const dd = String(hoy.getDate()).padStart(2,'0');
+  const mm = String(hoy.getMonth()+1).padStart(2,'0');
+  const aa = String(hoy.getFullYear()).slice(-2);
+  return dd + mm + aa;
+}
+
 // ===== INICIALIZAR =====
 window.onload = () => {
-  // Fecha de hoy por defecto
   const hoy = new Date().toISOString().split('T')[0];
   document.getElementById('fecha').value = hoy;
-  agregarFila();
-  agregarFila();
 
-  // Cargar datos guardados del localStorage (para no perder si recargan)
+  // N° de recibo por defecto = fecha
+  const numDefault = numReciboPorDefecto();
+  document.getElementById('inputNumero').value = numDefault;
+  document.getElementById('numDisplay').textContent = numDefault;
+
+  agregarFila();
+  agregarFila();
   cargarStorage();
 };
 
-// ===== WHATSAPP =====
-function abrirWhatsApp(num) {
-  const tel = document.getElementById('tel' + num)?.value || '';
-  // Limpiar: sacar espacios, guiones, paréntesis, dejar solo dígitos y +
+// ===== WHATSAPP CLIENTE =====
+function abrirWhatsAppCliente() {
+  const tel = document.getElementById('telCliente')?.value || '';
   const limpio = tel.replace(/[^\d+]/g, '');
   if (!limpio) {
-    alert('Primero completá el teléfono ' + num + ' en el pie del recibo.');
+    alert('Primero completá el Teléfono cliente en la banda superior.');
     return;
   }
-  // Armar mensaje con datos del recibo
   const cliente = document.getElementById('cliente')?.value || '';
   const trabajo = document.getElementById('trabajo')?.value || '';
-  const resta = document.getElementById('restaDisplay')?.textContent || '';
-  let msg = '¡Hola! Te enviamos tu recibo de Mármoles y Granitos Quilmes.';
-  if (cliente) msg += '\nCliente: ' + cliente;
+  const resta   = document.getElementById('restaDisplay')?.textContent || '';
+  const num     = document.getElementById('inputNumero')?.value || '';
+  let msg = '¡Hola' + (cliente ? ' ' + cliente : '') + '! Te enviamos tu recibo N°' + num + ' de Mármoles y Granitos Quilmes.';
   if (trabajo) msg += '\nTrabajo: ' + trabajo;
   if (resta && resta !== '$ 0,00') msg += '\nSaldo pendiente: ' + resta;
   window.open('https://wa.me/' + limpio.replace('+','') + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ===== GMAIL CLIENTE =====
+function enviarGmail() {
+  const mailDest = document.getElementById('mailCliente')?.value || '';
+  if (!mailDest) {
+    alert('Primero completá el Mail cliente en la banda superior.');
+    return;
+  }
+  const cliente = document.getElementById('cliente')?.value || '';
+  const num     = document.getElementById('inputNumero')?.value || '';
+  const trabajo = document.getElementById('trabajo')?.value || '';
+  const total   = document.getElementById('totalDisplay')?.textContent || '';
+  const subject = encodeURIComponent('Recibo N°' + num + ' – Mármoles y Granitos Quilmes');
+  let body = 'Hola' + (cliente ? ' ' + cliente : '') + ',\n\n';
+  body += 'Te adjuntamos el recibo N°' + num + ' de Mármoles y Granitos Quilmes.\n';
+  if (trabajo) body += 'Trabajo: ' + trabajo + '\n';
+  if (total)   body += 'Total: ' + total + '\n';
+  body += '\nSaludos,\nMármoles y Granitos Quilmes';
+  window.open('https://mail.google.com/mail/?view=cm&to=' + encodeURIComponent(mailDest) + '&su=' + subject + '&body=' + encodeURIComponent(body), '_blank');
 }
 
 // ===== ESTADO PAGO =====
@@ -763,20 +821,19 @@ function setEstado(tipo, btn) {
   btn.classList.add('activo');
 }
 
-// ===== FILAS TABLA =====
+// ===== FILAS TABLA (sin precio unitario) =====
 let filaId = 0;
 function agregarFila() {
   filaId++;
   const tbody = document.getElementById('tablaItems');
   const tr = document.createElement('tr');
   tr.id = 'fila-' + filaId;
-  tr.innerHTML = `
-    <td><input type="text" placeholder="Descripción del ítem" onchange="calcularTotales()"/></td>
-    <td><input type="text" placeholder="Ej: 1.20m x 0.60m"/></td>
-    <td class="monto"><input type="text" placeholder="0" oninput="calcularSubtotalFila(this, ${filaId})"/></td>
-    <td class="monto"><input type="text" id="sub-${filaId}" readonly placeholder="–" style="font-weight:700;color:var(--verde);"/></td>
-    <td><button class="btn-eliminar" onclick="eliminarFila(${filaId})">✕</button></td>
-  `;
+  const fid = filaId;
+  tr.innerHTML =
+    `<td><input type="text" placeholder="Descripción del ítem"/></td>
+     <td><input type="text" placeholder="Ej: 1.20m x 0.60m"/></td>
+     <td class="monto"><input type="text" id="sub-${fid}" placeholder="0" oninput="calcularSubtotalFila(this, ${fid})" style="font-weight:700;color:var(--verde);text-align:right;"/></td>
+     <td><button class="btn-eliminar" onclick="eliminarFila(${fid})">✕</button></td>`;
   tbody.appendChild(tr);
 }
 
@@ -787,9 +844,6 @@ function eliminarFila(id) {
 }
 
 function calcularSubtotalFila(input, id) {
-  const val = parseMonto(input.value);
-  const subEl = document.getElementById('sub-' + id);
-  if (subEl) subEl.value = val > 0 ? formatMonto(val) : '–';
   calcularTotales();
 }
 
@@ -806,11 +860,11 @@ function formatMonto(n) {
 function calcularTotales() {
   let sub = 0;
   document.querySelectorAll('#tablaItems tr').forEach(tr => {
-    const inputs = tr.querySelectorAll('td.monto input');
-    if (inputs[0]) sub += parseMonto(inputs[0].value);
+    const subInput = tr.querySelector('td.monto input');
+    if (subInput) sub += parseMonto(subInput.value);
   });
   document.getElementById('subtotalDisplay').textContent = formatMonto(sub);
-  const desc = parseMonto(document.getElementById('descuento').value);
+  const desc  = parseMonto(document.getElementById('descuento').value);
   const total = Math.max(0, sub - desc);
   document.getElementById('totalDisplay').textContent = formatMonto(total);
   calcularRestante();
@@ -818,9 +872,9 @@ function calcularTotales() {
 
 function calcularRestante() {
   const totalTxt = document.getElementById('totalDisplay').textContent;
-  const total = parseMonto(totalTxt.replace('$',''));
-  const abonado = parseMonto(document.getElementById('abonado').value);
-  const resta = Math.max(0, total - abonado);
+  const total    = parseMonto(totalTxt.replace('$',''));
+  const abonado  = parseMonto(document.getElementById('abonado').value);
+  const resta    = Math.max(0, total - abonado);
   document.getElementById('restaDisplay').textContent = formatMonto(resta);
 }
 
@@ -836,6 +890,9 @@ function cargarPlano(e) {
     document.getElementById('btnQuitarPlano').style.display = 'inline-block';
     document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = 'none');
     document.querySelector('.planos-zona .icono').style.display = 'none';
+    // Quitar tag (opcional) y marcar que hay imagen
+    document.getElementById('tagOpcional').style.display = 'none';
+    document.getElementById('seccionPlanos').classList.remove('sin-imagen');
   };
   reader.readAsDataURL(file);
 }
@@ -848,6 +905,9 @@ function quitarPlano(e) {
   document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = '');
   document.querySelector('.planos-zona .icono').style.display = '';
   document.getElementById('inputPlano').value = '';
+  // Restaurar tag (opcional) y marcar sin imagen
+  document.getElementById('tagOpcional').style.display = '';
+  document.getElementById('seccionPlanos').classList.add('sin-imagen');
 }
 
 // ===== LIMPIAR =====
@@ -857,15 +917,19 @@ function limpiarTodo() {
   filaId = 0;
   agregarFila();
   agregarFila();
-  ['fecha','cliente','telCliente','trabajo','material','bacha','direccion',
-   'descuento','abonado','observaciones','tel1','tel2','direccionLocal','email','inputNumero'].forEach(id => {
+  ['fecha','cliente','telCliente','mailCliente','trabajo','material','bacha','direccion',
+   'descuento','abonado','observaciones','tel1','tel2','direccionLocal','emailLocal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
-  document.getElementById('numDisplay').textContent = '–';
+  // Resetear n° de recibo al de hoy
+  const numDefault = numReciboPorDefecto();
+  document.getElementById('inputNumero').value = numDefault;
+  document.getElementById('numDisplay').textContent = numDefault;
+
   document.getElementById('subtotalDisplay').textContent = '$ 0,00';
-  document.getElementById('totalDisplay').textContent = '$ 0,00';
-  document.getElementById('restaDisplay').textContent = '$ 0,00';
+  document.getElementById('totalDisplay').textContent    = '$ 0,00';
+  document.getElementById('restaDisplay').textContent    = '$ 0,00';
   quitarPlano({stopPropagation:()=>{}});
   const hoy = new Date().toISOString().split('T')[0];
   document.getElementById('fecha').value = hoy;
@@ -881,16 +945,25 @@ async function descargarPDF() {
   document.querySelectorAll('.btn-agregar, .btn-eliminar, .btn-quitar-plano').forEach(el => el.style.visibility = 'hidden');
   document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = 'none');
 
+  // Si no hay imagen de plano, ocultar la sección entera temporalmente
+  const seccionPlanos  = document.getElementById('seccionPlanos');
+  const hayImagen      = !seccionPlanos.classList.contains('sin-imagen');
+  if (!hayImagen) seccionPlanos.style.display = 'none';
+
+  // Reemplazar inputs del footer por links clicables para PDF
+  const tel1Val  = document.getElementById('tel1').value;
+  const tel2Val  = document.getElementById('tel2').value;
+  const dirVal   = document.getElementById('direccionLocal').value;
+  const emailVal = document.getElementById('emailLocal').value;
+  renderFooterParaPDF(tel1Val, tel2Val, dirVal, emailVal);
+
   try {
     const doc = document.getElementById('documento');
-
-    // Forzar ancho A4 exacto (794px a 96dpi) durante la captura
     const A4_PX = 794;
     const prevStyle = doc.getAttribute('style') || '';
     doc.style.cssText += ';width:' + A4_PX + 'px!important;max-width:' + A4_PX + 'px!important;border-radius:0!important;';
 
-    // Pausa para que el navegador re-renderice con el nuevo ancho
-    await new Promise(r => setTimeout(r, 100));
+    await new Promise(r => setTimeout(r, 120));
 
     const canvas = await html2canvas(doc, {
       scale: 2,
@@ -903,31 +976,26 @@ async function descargarPDF() {
       windowHeight: doc.scrollHeight
     });
 
-    // Restaurar estilos originales
     doc.setAttribute('style', prevStyle);
 
     const { jsPDF } = window.jspdf;
-
-    // Ancho fijo A4 (210mm), alto proporcional al contenido — una sola hoja
     const pdfW = 210;
     const pdfH = (canvas.height / canvas.width) * pdfW;
-
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: [pdfW, pdfH]
-    });
-
+    const pdf  = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [pdfW, pdfH] });
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
     pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
 
-    const num = document.getElementById('inputNumero').value || '001';
-    const cliente = document.getElementById('cliente').value || 'cliente';
-    pdf.save(`Recibo-${num}-${cliente}.pdf`);
+    const num = document.getElementById('inputNumero').value || numReciboPorDefecto();
+    pdf.save('MYGQrecibo' + num + '.pdf');
 
   } catch (err) {
     alert('Error al generar el PDF: ' + err.message);
   } finally {
+    // Restaurar sección planos
+    if (!hayImagen) seccionPlanos.style.display = '';
+    // Restaurar footer editable
+    restaurarFooterEditable(tel1Val, tel2Val, dirVal, emailVal);
+
     document.querySelectorAll('.btn-agregar, .btn-eliminar, .btn-quitar-plano').forEach(el => el.style.visibility = '');
     document.querySelectorAll('.planos-texto-hint').forEach(el => el.style.display = '');
     btn.textContent = '⬇ Descargar PDF';
@@ -935,16 +1003,56 @@ async function descargarPDF() {
   }
 }
 
-// ===== STORAGE (persistencia básica) =====
+// Reemplaza los inputs del footer por spans/links para que queden lindos en el PDF
+function renderFooterParaPDF(tel1, tel2, dir, email) {
+  function telLink(num, label) {
+    const limpio = num.replace(/[^\d+]/g, '');
+    if (!limpio) return '';
+    return `<a href="https://wa.me/${limpio.replace('+','')}" class="footer-link">📞 ${label || num}</a>`;
+  }
+  function mapLink(addr) {
+    if (!addr) return '';
+    return `<a href="https://maps.google.com/?q=${encodeURIComponent(addr)}" class="footer-link">📍 ${addr}</a>`;
+  }
+  function mailLink(mail) {
+    if (!mail) return '';
+    return `<a href="mailto:${mail}" class="footer-link">✉️ ${mail}</a>`;
+  }
+
+  const lineas = [
+    { id:'linea-tel1-edit', html: tel1 ? telLink(tel1, tel1) : '' },
+    { id:'linea-tel2-edit', html: tel2 ? telLink(tel2, tel2) : '' },
+    { id:'linea-dir-edit',  html: dir  ? mapLink(dir) : '' },
+    { id:'linea-email-edit',html: email? mailLink(email) : '' },
+  ];
+  lineas.forEach(({ id, html }) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.dataset.originalHtml = el.innerHTML;
+      el.innerHTML = html;
+    }
+  });
+}
+
+function restaurarFooterEditable(tel1, tel2, dir, email) {
+  ['linea-tel1-edit','linea-tel2-edit','linea-dir-edit','linea-email-edit'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.dataset.originalHtml) {
+      el.innerHTML = el.dataset.originalHtml;
+      delete el.dataset.originalHtml;
+    }
+  });
+}
+
+// ===== STORAGE (persistencia de datos del local) =====
 function cargarStorage() {
-  const campos = ['tel1','tel2','direccionLocal','email'];
-  campos.forEach(id => {
+  ['tel1','tel2','direccionLocal','emailLocal'].forEach(id => {
     const val = localStorage.getItem('mgq_' + id);
     if (val) document.getElementById(id).value = val;
   });
 }
 
-['tel1','tel2','direccionLocal','email'].forEach(id => {
+['tel1','tel2','direccionLocal','emailLocal'].forEach(id => {
   document.getElementById(id)?.addEventListener('input', function() {
     localStorage.setItem('mgq_' + id, this.value);
   });
