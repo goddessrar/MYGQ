@@ -128,12 +128,19 @@
   .banda {
     background: var(--verde-bg);
     border-top: 3px solid var(--verde);
-    border-bottom: 3px solid var(--verde);
     padding: 14px 44px;
     display: flex;
-    gap: 30px;
+    gap: 20px;
+    align-items: flex-end;
     flex-wrap: wrap;
   }
+
+  /* Cada item de la banda puede crecer */
+  .banda-item { display: flex; flex-direction: column; min-width: 0; }
+  .banda-fecha { flex: 0 0 auto; }
+  .banda-cliente { flex: 1 1 140px; }
+  .banda-tel { flex: 0 0 auto; }
+  .banda-mail { flex: 2 1 200px; min-width: 0; }
 
   .banda-item label {
     font-size: 10px;
@@ -143,6 +150,7 @@
     color: var(--verde);
     display: block;
     margin-bottom: 3px;
+    white-space: nowrap;
   }
   .banda-item input {
     font-family: 'Montserrat', sans-serif;
@@ -153,11 +161,31 @@
     border: none;
     border-bottom: 1.5px solid var(--borde);
     padding: 2px 0;
-    min-width: 160px;
+    width: 100%;
+    min-width: 0;
     outline: none;
     transition: border-color 0.2s;
   }
   .banda-item input:focus { border-bottom-color: var(--verde); }
+
+  /* ===== BARRA ESTADO DE PAGO ===== */
+  .barra-estado {
+    background: var(--verde-bg);
+    border-bottom: 3px solid var(--verde);
+    padding: 10px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+  .barra-estado-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--verde);
+    white-space: nowrap;
+  }
 
   /* ===== CUERPO ===== */
   .cuerpo {
@@ -518,17 +546,17 @@
     .header-right { text-align: center; }
     .header-right h1 { font-size: 22px; }
     .logo-wrap svg { max-width: 260px; margin: 0 auto; }
-    .banda { padding: 14px 16px; gap: 16px; }
-    .banda-item input { min-width: 120px; font-size: 13px; }
+    .banda { padding: 14px 16px; gap: 14px; }
+    .banda-fecha, .banda-tel { flex: 0 0 calc(50% - 7px); }
+    .banda-cliente, .banda-mail { flex: 1 1 100%; }
+    .barra-estado { padding: 10px 16px; justify-content: flex-start; }
     .cuerpo { padding: 20px 16px; gap: 20px; }
     .footer { padding: 16px; flex-direction: column; align-items: flex-start; gap: 16px; }
     .footer-firma { text-align: left; }
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .totales-wrap { justify-content: stretch; }
     .totales-box { min-width: 100%; }
-    /* Tabla scroll horizontal en mobile */
     .tabla-wrap { -webkit-overflow-scrolling: touch; }
-    /* Links del footer más grandes para dedos */
     .footer-link { font-size: 14px; line-height: 1.8; }
     #btnEditarContacto { font-size: 13px; padding: 8px 16px; }
   }
@@ -618,37 +646,37 @@
     </div>
   </div>
 
-  <!-- BANDA DATOS BÁSICOS -->
+  <!-- BANDA DATOS BÁSICOS — solo datos del cliente, sin estado de pago -->
   <div class="banda">
-    <div class="banda-item">
+    <div class="banda-item banda-fecha">
       <label>Fecha</label>
-      <!-- Input oculto type=date para el picker nativo -->
       <input type="date" id="fechaRaw" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" oninput="sincronizarFecha()"/>
-      <!-- Input visible con formato DD/MM/AAAA, abre el picker al hacer clic -->
       <input type="text" id="fecha" placeholder="DD/MM/AAAA" readonly
         style="cursor:pointer;"
         onclick="document.getElementById('fechaRaw').showPicker ? document.getElementById('fechaRaw').showPicker() : document.getElementById('fechaRaw').click()"
         title="Hacé clic para elegir la fecha"/>
     </div>
-    <div class="banda-item">
+    <div class="banda-item banda-cliente">
       <label>Cliente</label>
       <input type="text" id="cliente" placeholder="Nombre y apellido"/>
     </div>
-    <div class="banda-item">
+    <div class="banda-item banda-tel">
       <label>Teléfono cliente</label>
       <input type="text" id="telCliente" placeholder="+54 11 0000-0000"/>
     </div>
-    <div class="banda-item">
+    <div class="banda-item banda-mail">
       <label>Mail cliente</label>
-      <input type="email" id="mailCliente" placeholder="cliente@email.com"/>
+      <input type="email" id="mailCliente" placeholder="cliente@email.com" style="min-width:220px;max-width:100%;width:100%;"/>
     </div>
-    <div class="banda-item">
-      <label>Estado de pago</label>
-      <div class="estado-pago" style="margin-top:4px;">
-        <button class="chip-estado pendiente activo" onclick="setEstado('pendiente',this)">Pendiente</button>
-        <button class="chip-estado seniado" onclick="setEstado('seniado',this)">Señado</button>
-        <button class="chip-estado pagado" onclick="setEstado('pagado',this)">Pagado</button>
-      </div>
+  </div>
+
+  <!-- BARRA ESTADO DE PAGO — separada, ocupa el ancho completo con el chip a la derecha -->
+  <div class="barra-estado">
+    <span class="barra-estado-lbl">Estado de pago</span>
+    <div class="estado-pago">
+      <button class="chip-estado pendiente activo" onclick="setEstado('pendiente',this)">Pendiente</button>
+      <button class="chip-estado seniado" onclick="setEstado('seniado',this)">Señado</button>
+      <button class="chip-estado pagado" onclick="setEstado('pagado',this)">Pagado</button>
     </div>
   </div>
 
@@ -1227,4 +1255,3 @@ function cargarStorage() {
   });
 }
 </script>
-
