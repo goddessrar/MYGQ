@@ -10,174 +10,91 @@
 <style>
 :root{--verde:#507560;--verde-oscuro:#3a5648;--verde-bg:#f0f5f2;--gris:#6b7280;--gris-claro:#f3f4f6;--borde:#d1d8d3;--texto:#1a2e23;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:#e8ede9;color:var(--texto);min-height:100vh;padding:30px 20px;}
+/* Fondo invertido: cuerpo en verde, documento en blanco */
+body{font-family:'Montserrat',sans-serif;background:var(--verde);color:var(--texto);min-height:100vh;padding:30px 20px;}
 .toolbar{max-width:860px;margin:0 auto 20px;display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;}
 .btn{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;padding:10px 22px;border-radius:8px;border:none;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;transition:all .2s ease;display:flex;align-items:center;gap:8px;}
-.btn-primary{background:var(--verde);color:#fff;box-shadow:0 4px 14px rgba(80,117,96,.35);}
-.btn-primary:hover{background:var(--verde-oscuro);transform:translateY(-1px);}
-.btn-secondary{background:#fff;color:var(--verde);border:2px solid var(--verde);}
-.btn-secondary:hover{background:var(--verde-bg);}
-.btn-wa{background:#25d366;color:#fff;box-shadow:0 4px 14px rgba(37,211,102,.35);}
-.btn-wa:hover{background:#1da851;transform:translateY(-1px);}
-.btn-gmail{background:#EA4335;color:#fff;box-shadow:0 4px 14px rgba(234,67,53,.35);}
-.btn-gmail:hover{background:#c0392b;transform:translateY(-1px);}
-#documento{max-width:860px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.12);}
-/* HEADER */
-.header{background:var(--verde);padding:30px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;}
+.btn-primary{background:#fff;color:var(--verde);box-shadow:0 4px 14px rgba(0,0,0,.2);border: 1px solid var(--borde);}
+.btn-primary:hover{background:var(--verde-bg);transform:translateY(-1px);}
+.btn-secondary{background:rgba(255,255,255,0.1);color:#fff;border:2px solid #fff;}
+.btn-secondary:hover{background:rgba(255,255,255,0.2);}
+.btn-wa{background:#25d366;color:#fff;}
+.btn-gmail{background:#EA4335;color:#fff;}
+
+#documento{max-width:860px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+
+/* HEADER INVERTIDO: Banner Blanco, Logo Verde */
+.header{background:#fff;padding:30px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom: 1px solid var(--gris-claro);}
 .logo-wrap{flex:1;min-width:0;}
 .logo-wrap svg{width:100%;max-width:360px;height:auto;display:block;}
-.logo-wrap svg .st0{fill:#fff!important;}
-.header-right{text-align:right;color:#fff;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
-.header-right h1{font-size:26px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
-.header-divider{width:40px;height:2px;background:rgba(255,255,255,.35);margin:2px 0;}
-.header-num-label{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.6;}
-.header-num-input{background:transparent;border:none;border-bottom:1.5px solid rgba(255,255,255,.3);color:#fff;font-family:'Montserrat',sans-serif;font-size:20px;font-weight:600;letter-spacing:.08em;width:110px;text-align:right;outline:none;padding:2px 0;transition:border-color .2s;}
-.header-num-input:focus{border-bottom-color:rgba(255,255,255,.8);}
-.header-num-input::placeholder{color:rgba(255,255,255,.3);font-size:14px;}
+/* Cambio de color del logo a verde */
+.logo-wrap svg .st0{fill:var(--verde)!important;}
+
+.header-right{text-align:right;color:var(--verde);flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.header-right h1{font-size:26px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--verde-oscuro);}
+.header-divider{width:40px;height:2px;background:var(--verde);margin:2px 0;}
+.header-num-label{font-size:9px;font-weight:700;text-transform:uppercase;opacity:.6;color:var(--gris);}
+.header-num-input{background:transparent;border:none;border-bottom:1.5px solid var(--borde);color:var(--texto);font-family:'Montserrat',sans-serif;font-size:20px;font-weight:600;width:110px;text-align:right;outline:none;}
+
 /* BANDA CLIENTE */
 .banda{background:var(--verde-bg);border-top:3px solid var(--verde);padding:16px 48px;display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;}
-.banda-item{display:flex;flex-direction:column;min-width:0;}
-.banda-fecha{flex:0 0 auto;}
-.banda-cliente{flex:1 1 140px;}
-.banda-tel{flex:0 0 auto;}
-.banda-mail{flex:2 1 200px;min-width:0;}
-.banda-item label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--verde-oscuro);display:block;margin-bottom:4px;}
-.banda-item input{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--texto);background:transparent;border:none;border-bottom:1.5px solid var(--borde);padding:3px 0;width:100%;min-width:0;outline:none;transition:border-color .2s;}
-.banda-item input:focus{border-bottom-color:var(--verde);}
-/* BANDA INFERIOR */
-.banda-inferior{background:var(--verde-bg);border-bottom:3px solid var(--verde);padding:8px 48px 12px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
-.banda-inf-item{display:flex;flex-direction:column;}
-.banda-inf-item label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--verde-oscuro);margin-bottom:4px;}
-.banda-inf-item input{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--texto);background:transparent;border:none;border-bottom:1.5px solid var(--borde);padding:3px 0;outline:none;min-width:180px;transition:border-color .2s;}
-.banda-inf-item input:focus{border-bottom-color:var(--verde);}
-.validez-wrap{display:flex;align-items:center;gap:10px;}
-.validez-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--verde-oscuro);white-space:nowrap;}
-.validez-chips{display:flex;gap:6px;flex-wrap:wrap;}
-.chip-v{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.05em;padding:4px 12px;border-radius:14px;border:1.5px solid var(--borde);background:transparent;color:var(--gris);cursor:pointer;transition:all .2s;}
-.chip-v.activo{background:var(--verde);border-color:var(--verde);color:#fff;}
-.chip-v-custom{display:flex;align-items:center;gap:4px;border:1.5px solid var(--borde);border-radius:14px;padding:4px 10px;cursor:pointer;transition:border-color .2s;}
-.chip-v-custom.activo{border-color:var(--verde);}
-.chip-v-custom input{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;background:transparent;border:none;outline:none;width:26px;text-align:center;color:var(--texto);}
-.chip-v-custom span{font-size:10px;font-weight:700;color:var(--gris);letter-spacing:.05em;}
-/* CUERPO */
-.cuerpo{padding:40px 48px;display:flex;flex-direction:column;gap:32px;}
-.sec-titulo{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--verde-oscuro);border-bottom:1px solid var(--borde);padding-bottom:8px;margin-bottom:18px;}
-/* TABLA */
-.tabla-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-table{width:100%;border-collapse:collapse;font-size:13px;}
+.banda-item label{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--verde-oscuro);display:block;margin-bottom:4px;}
+.banda-item input{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--texto);background:transparent;border:none;border-bottom:1.5px solid var(--borde);padding:3px 0;width:100%;outline:none;}
+
+/* TABLA OPTIMIZADA PARA NOMBRES LARGOS */
+.tabla-wrap{overflow-x:hidden;}
+table{width:100%;border-collapse:collapse;table-layout: fixed;} /* Layout fijo para controlar anchos */
 thead tr{background:var(--verde);color:#fff;}
-thead th{padding:11px 14px;text-align:left;font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;}
-thead th.th-r{text-align:right;}
-tbody tr{border-bottom:1px solid var(--borde);}
-tbody tr:last-child{border-bottom:none;}
-tbody td{padding:10px 14px;vertical-align:middle;}
-tbody td input{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:500;background:transparent;border:none;border-bottom:1.5px solid transparent;padding:2px 0;width:100%;outline:none;transition:border-color .2s;color:var(--texto);}
-tbody td input:focus{border-bottom-color:var(--verde);}
-tbody td.td-p input{text-align:right;font-weight:600;}
-.btn-add{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:var(--verde);background:transparent;border:1.5px dashed var(--verde);border-radius:6px;padding:6px 14px;cursor:pointer;margin-top:10px;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;}
-.btn-add:hover{background:var(--verde-bg);}
-.btn-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:13px;padding:0 4px;transition:color .2s;}
-.btn-del:hover{color:#e05454;}
+thead th{padding:12px 10px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.05em;}
+tbody td{padding:10px;vertical-align:top;border-bottom:1px solid var(--gris-claro);}
+
+/* Estilo para que los inputs se expandan */
+tbody td textarea {
+    font-family:'Montserrat',sans-serif;
+    font-size:12px;
+    font-weight:500;
+    background:transparent;
+    border:none;
+    width:100%;
+    outline:none;
+    resize: none;
+    overflow: hidden;
+    min-height: 20px;
+    color: var(--texto);
+    display: block;
+}
+
 /* TOTALES */
-.totales-wrap{display:flex;justify-content:flex-end;}
-.totales-box{min-width:320px;display:flex;flex-direction:column;border:1.5px solid var(--borde);border-radius:10px;overflow:hidden;}
-.t-row{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;gap:16px;border-bottom:1px solid var(--borde);}
-.t-row:last-child{border-bottom:none;}
-.t-row.t-grande{background:var(--verde);}
-.t-row.t-senia{background:var(--verde-bg);}
-.t-row .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gris);}
-.t-row.t-grande .lbl{color:rgba(255,255,255,.7);}
-.t-row.t-senia .lbl{color:var(--verde-oscuro);}
-.t-row .val{font-size:14px;font-weight:700;color:var(--texto);}
-.t-row.t-grande .val{font-size:22px;color:#fff;}
-.t-row.t-senia .val{font-size:15px;color:var(--verde);}
-.t-row .val input{font-family:'Montserrat',sans-serif;font-weight:700;background:transparent;border:none;border-bottom:1.5px solid var(--borde);padding:2px 0;text-align:right;outline:none;transition:border-color .2s;color:var(--texto);font-size:14px;width:160px;}
-.t-row .val input:focus{border-bottom-color:var(--verde);}
-.t-row.t-grande .val input{font-size:22px;color:#fff;border-bottom-color:rgba(255,255,255,.3);width:180px;}
-.t-row.t-grande .val input:focus{border-bottom-color:rgba(255,255,255,.8);}
-/* CONDICIONES */
-.cond-bloque{background:var(--gris-claro);border-radius:10px;padding:20px 24px;}
-.cond-linea{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid var(--borde);font-size:12px;line-height:1.6;color:var(--texto);}
-.cond-linea:last-child{border-bottom:none;padding-bottom:0;}
-.cond-dot{width:5px;height:5px;border-radius:50%;background:var(--verde);flex-shrink:0;margin-top:7px;}
-.cond-linea input{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;background:transparent;border:none;border-bottom:1px dashed transparent;color:var(--texto);outline:none;width:100%;padding:1px 0;transition:border-color .2s;}
-.cond-linea input:focus{border-bottom-color:#a0b8aa;}
-.btn-del-c{background:none;border:none;color:#ccc;cursor:pointer;font-size:12px;flex-shrink:0;padding:0 2px;transition:color .2s;line-height:1;}
-.btn-del-c:hover{color:#e05454;}
-/* PLANOS */
-.planos-zona{border:1.5px dashed var(--borde);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-.planos-zona:hover{border-color:var(--verde);background:var(--verde-bg);}
-.planos-txt{font-size:12px;font-weight:500;color:var(--gris);}
-.planos-sub{font-size:10px;color:#aaa;}
-#inputPlano{display:none;}
-#previewPlano{max-width:100%;max-height:400px;border-radius:8px;display:none;margin-top:10px;}
-.btn-quitar-plano{font-family:'Montserrat',sans-serif;font-size:11px;color:#e05454;background:transparent;border:1.5px solid #e05454;border-radius:6px;padding:4px 10px;cursor:pointer;display:none;margin-top:8px;}
-/* OBS */
-.obs-input{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:400;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:14px 16px;width:100%;min-height:80px;outline:none;resize:vertical;transition:all .2s;}
-.obs-input:focus{border-color:var(--verde);background:#fff;}
-/* FOOTER */
-.footer{background:var(--texto);color:rgba(255,255,255,.8);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
-.footer-ct{display:flex;flex-direction:column;gap:6px;font-size:12px;flex:1;min-width:0;}
-.footer-ct-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.45);margin-bottom:4px;}
-.footer-ct .linea{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;word-break:break-all;}
-.footer-link{color:rgba(255,255,255,.85);text-decoration:none;font-size:12px;font-family:'Montserrat',sans-serif;}
-.footer-link:hover{color:#fff;text-decoration:underline;}
-.footer-firma{text-align:right;font-size:10px;color:rgba(255,255,255,.38);font-style:italic;flex-shrink:0;line-height:1.8;}
-/* PRINT */
+.totales-wrap{display:flex;justify-content:flex-end;margin-top:20px;}
+.totales-box{min-width:320px;border:1.5px solid var(--borde);border-radius:10px;overflow:hidden;}
+.t-row{display:flex;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--borde);}
+.t-row.t-grande{background:var(--verde);color:#fff;}
+
+/* CONDICIONES Y DEMÁS */
+.cuerpo{padding:40px 48px;display:flex;flex-direction:column;gap:32px;}
+.sec-titulo{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--verde-oscuro);border-bottom:1px solid var(--borde);padding-bottom:8px;margin-bottom:15px;}
+.footer{background:var(--texto);color:rgba(255,255,255,.8);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+
 @media print{
   body{background:white;padding:0;}
   .toolbar{display:none;}
-  #documento{border-radius:0;box-shadow:none;max-width:100%;}
-  .btn-add,.btn-del,.btn-quitar-plano,.btn-del-c{display:none!important;}
-  input,textarea{border:none!important;background:transparent!important;box-shadow:none!important;}
-  .planos-txt,.planos-sub{display:none;}
-  #seccionPlanos.sin-imagen{display:none!important;}
-  #btnEditarCt{display:none!important;}
-}
-/* RESPONSIVE */
-@media(max-width:640px){
-  body{padding:0;background:#fff;}
-  .toolbar{padding:12px 14px;gap:8px;justify-content:center;background:#e8ede9;margin-bottom:0;border-radius:0;}
-  .btn{font-size:11px;padding:8px 12px;gap:5px;}
-  #documento{border-radius:0;box-shadow:none;}
-  .header{flex-direction:column;text-align:center;padding:20px;gap:12px;}
-  .header-right{text-align:center;align-items:center;}
-  .header-right h1{font-size:20px;}
-  .logo-wrap svg{max-width:240px;margin:0 auto;}
-  .banda{padding:14px 16px;gap:14px;}
-  .banda-fecha,.banda-tel{flex:0 0 calc(50% - 7px);}
-  .banda-cliente,.banda-mail{flex:1 1 100%;}
-  .banda-inferior{padding:10px 16px;flex-direction:column;align-items:flex-start;gap:12px;}
-  .cuerpo{padding:24px 16px;gap:24px;}
-  .footer{padding:16px;flex-direction:column;align-items:flex-start;gap:14px;}
-  .footer-firma{text-align:left;}
-  .totales-wrap{justify-content:stretch;}
-  .totales-box{min-width:100%;}
-  .footer-link{font-size:14px;line-height:1.8;}
-  #btnEditarCt{font-size:13px;padding:8px 16px;}
+  #documento{box-shadow:none;border-radius:0;}
+  .btn-add, .btn-del {display:none!important;}
 }
 </style>
 </head>
 <body>
 
 <div class="toolbar">
-  <button class="btn btn-secondary" onclick="limpiarTodo()">🗑 Limpiar todo</button>
-  <button class="btn btn-wa" id="btnWa" onclick="abrirWA()">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    WA Cliente
-  </button>
-  <button class="btn btn-gmail" id="btnGm" onclick="abrirGmail()">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
-    Gmail Cliente
-  </button>
+  <button class="btn btn-secondary" onclick="limpiarTodo()">🗑 Limpiar</button>
+  <button class="btn btn-wa" onclick="abrirWA()">WA Cliente</button>
   <button class="btn btn-primary" onclick="descargarPDF()">⬇ Descargar PDF</button>
 </div>
 
 <div id="documento">
   <div class="header">
     <div class="logo-wrap">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 812.6 312.6" xml:space="preserve">
-        <style>.st0{fill:#ffffff;}</style>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 812.6 312.6">
         <g><path class="st0" d="M89.3,226.9c0,3.4,2.1,5.6,5.5,5.6c2.9,0,5.1-2.4,5.1-5.6V123.3c0-14,0-43.6,0-43.6h11.4c0,0,0,0.4,0,1.2l5.3,29.7h0.2l4.8-30.8l0.2,0h11.6c0,0,0,57.7,0,86v61.4c0,2.5,2.1,5.1,4.2,5.2c3.4,0.2,5.9-1.5,6.1-4.5c0.2-3.8,0.2-7.6,0.2-11.4c0-7.9,0-15.7,0-23.6v-92.1c0-8.8,0-17.5,0-26.3c0-3.2-2.1-5.5-5.1-5.5c-14.8,0-29.6,0-44.4,0c-2.6,0-4.6,1.6-4.9,4.1c-0.3,2.4-0.2,4.8-0.2,7.3c0,7.8,0,15.7,0,23.6L89.3,226.9z"/><path class="st0" d="M117.6,0C52.7,0,0,52.6,0,117.6c0,7,0.6,13.9,1.8,20.6c7.1,40.2,34.6,73.3,71.4,88.3c2,0.1,4.5-2.4,4.5-4.6V74.3c0-3.2-2-5.3-5.2-5.3c-8.3,0-16.6,0-24.9,0c-4.9,0-9.4,3.9-10.4,8.7c-1,5,1.8,10.3,6.4,12.2c7.6,3.1,15.3-2.3,15.3-10.7c0-2.5,0.8-4.6,3.1-5.7c2.1-1.1,4.3-1.1,6.2,0.5c1.9,1.6,2.3,3.7,2.2,6.2c-0.2,4.7-1.6,8.9-4.3,12.6c-4.1,5.6-9.5,8.8-16.4,9.6c-9.6,1.1-18.4-5.1-22.2-13.2c-3.8-8-2-18.4,4.3-24.8c4.6-4.7,10.3-7,16.9-7c9.5,0,18.9,0,28.4,0h106.7c9.7,0,17.6,5.4,21.3,14.3c3.7,9,0.9,19.5-6.9,25.8c-4.2,3.3-9,5.4-14.4,5c-8.4-0.6-15-4.4-19.1-11.9c-2.4-4.3-3.8-9-2.5-14.1c0.7-2.6,3-3.9,6.4-3.6c2.3,0.2,3.8,1.7,4.4,4c0.8,3.1,1.1,6.4,2.5,9.1c1.7,3.4,5.1,5.1,9,4.9c4.9-0.3,8.9-2.7,10.2-7.4c2-7-2.1-14.1-10.2-14.3c-7.8-0.2-15.6-0.1-23.4-0.1c-3.2,0-5.4,2.2-5.4,5.4v118.5c0,7.9-0.1,15.8,0,23.8c0,2.2-0.1,4.7,0.8,6.6c1.3,2.9,4.1,3.5,7.3,2.1l0.2-0.1c7.7-3.3,16-7.7,24-13.3c0.1-0.1,0.1-0.1,0.2-0.1c12-8.9,22.1-20.1,30-32.9c10.9-17.9,17.3-38.9,17.3-61.3C235.2,52.6,182.5,0,117.6,0z M79.5,17.3c6.4,0,12.9,0,19.4,0h23.9c8,0,15.9,0,23.9,0c2.6,0,5.3,0,7.9,0.2c2.7,0.3,4.9,3.2,4.7,5.9c-0.3,3-2.8,5.5-5.6,5.5h-74c-2.7,0-5.4-2.8-5.4-5.6C74.1,20.1,76.6,17.3,79.5,17.3z M176.4,46c-1.2,1.8-2.8,2.9-5.1,2.9c-7.5,0-14.9,0.1-22.4,0.1c-7,0-13.9-0.1-20.9-0.1c-7.8,0-15.7,0-23.5,0H61.9c-3.3,0-6-2.7-6-6c0-2.8,2.9-5.4,6-5.4c2.6,0,5.2,0,7.8,0h76.7c8.1,0,16.2,0.2,24.2-0.1C175.9,37.2,178.7,42.4,176.4,46z"/><path class="st0" d="M179.4,257.7c-3.1-1.9-6.3-3-10-3.8c-23.3-5.5-55.9,8.1-68.1,13.9c-5.4,2.6-11.3,4.5-17.6,5.4c-3.7,0.6-7.9,0.8-11.5,0c-4.6-1.1-7.8-3.6-7.9-9.9c0-1.2,0.3-2.6,0.6-3.8c0.4-1.7,1.2-3.6,2.5-5.1c5.4-7.3,24.6-13.9,41.4-18.4c3.6-1,5.9-1.2,8.9-1.9c0.3,0,0.6-0.1,0.8-0.2c0.1,0,0.1,0,0.2,0l0,0c1.8-0.7,3.1-2.7,3.1-4.9V113.5l-3,9.6l-2.1,6.4l-2.1-6.4l-3.3-9.5v82.6c0,5.9,0,11.9,0,17.8c-0.4,5.5,1.6,14.7-4.6,17.9c-4.1,1.9-6.1,2.7-10.8,4.3c-1.2,0.4-2.4,0.9-3.6,1.3c-12.4,4.5-24,10.3-28,16.2c-1.1,1.8-2.1,3.7-2.6,5.7c-0.7,3.1-0.4,5.9,0.7,9.1c2.4,6.2,9.3,10.6,16.6,12.3c3,0.7,5.8,1.1,8.7,0.9c6.5-0.6,14.2-2,22.1-4.1c16.1-3.4,34.8-8,52.3-3.8c6.4,1.5,12.4,4.1,18.2,8.2c16.7,11.7,22,28.5,22.5,30.7l2.9-0.2C205.8,312.4,207.4,274.5,179.4,257.7z"/></g>
         <g><path class="st0" d="M264.4,141v-36.9h5.6l16.1,26.9h-3l15.9-26.9h5.6l0.1,36.9h-6.6v-26.7h1.3l-13.4,22.5H283l-13.7-22.5h1.6V141z"/><path class="st0" d="M322.5,141.4c-2.1,0-4-0.4-5.5-1.1s-2.8-1.7-3.7-3s-1.3-2.7-1.3-4.3c0-1.6,0.4-3,1.1-4.3c0.8-1.3,2-2.3,3.7-3s4-1.1,6.9-1.1h8.2v4.4h-7.7c-2.2,0-3.7,0.4-4.5,1.1s-1.2,1.6-1.2,2.7c0,1.2,0.5,2.1,1.4,2.8s2.3,1,4,1c1.6,0,3.1-0.4,4.3-1.1s2.2-1.8,2.8-3.3l1,4c-0.6,1.6-1.8,2.9-3.4,3.8C327.1,140.9,325.1,141.4,322.5,141.4z M331.4,141v-5.7l-0.3-1.2v-10c0-1.9-0.6-3.4-1.8-4.5s-3-1.6-5.3-1.6c-1.5,0-3.1,0.2-4.6,0.7s-2.8,1.2-3.9,2.1l-2.6-4.8c1.5-1.2,3.3-2,5.4-2.6s4.2-0.9,6.5-0.9c4.1,0,7.3,1,9.5,3s3.3,5,3.3,9.1V141z M321,109l7.1-7.2h7.8l-9.2,7.2H321z"/><path class="st0" d="M346.1,141v-28.1h6.3v7.7l-0.7-2.3c0.8-1.9,2.1-3.3,4-4.3s4.1-1.5,6.7-1.5v6.3c-0.2,0-0.5-0.1-0.7-0.1s-0.5,0-0.7,0c-2.5,0-4.5,0.7-6,2.2s-2.2,3.6-2.2,6.6V141z"/><path class="st0" d="M403.4,112.5c2.2,0,4.2,0.4,6,1.3s3.1,2.2,4.1,4.1s1.5,4.2,1.5,7V141h-6.5v-15.3c0-2.5-0.5-4.4-1.7-5.6s-2.7-1.8-4.7-1.8c-1.4,0-2.7,0.3-3.8,0.9s-2,1.6-2.6,2.8s-0.9,2.8-0.9,4.7V141h-6.5v-15.3c0-2.5-0.5-4.4-1.7-5.6s-2.7-1.8-4.7-1.8c-1.4,0-2.7,0.3-3.8,0.9s-2,1.6-2.6,2.8s-0.9,2.8-0.9,4.7V141h-6.5v-28.1h6.3v7.5l-1.2-2.3c0.9-1.8,2.3-3.2,4.1-4.2s3.9-1.5,6.2-1.5c2.6,0,4.9,0.7,6.9,1.9s3.2,3.3,3.8,6l-2.5-0.9c0.9-2.1,2.4-3.8,4.5-5.1C398.2,113.1,400.6,112.5,403.4,112.5z"/><path class="st0" d="M436,141.4c-2.8,0-5.4-0.6-7.7-1.9s-4.1-3-5.3-5.1s-1.9-4.7-1.9-7.4c0-2.8,0.7-5.3,1.9-7.5s3.1-3.8,5.3-5.1s4.8-1.9,7.7-1.9c2.9,0,5.5,0.6,7.8,1.9s4,2.9,5.3,5.1s1.9,4.6,1.9,7.5c0,2.8-0.6,5.3-1.9,7.5s-3.1,3.9-5.3,5.1S438.9,141.4,436,141.4z M436,135.8c1.6,0,3.1-0.4,4.3-1.1s2.2-1.8,3-3.1s1.1-2.9,1.1-4.7c0-1.8-0.4-3.3-1.1-4.7s-1.7-2.3-3-3.1s-2.7-1.1-4.3-1.1c-1.6,0-3,0.4-4.3,1.1s-2.3,1.7-3,3.1s-1.1,2.9-1.1,4.7c0,1.8,0.4,3.3,1.1,4.7s1.7,2.4,3,3.1S434.5,135.8,436,135.8z"/><path class="st0" d="M457.4,141v-39.1h6.5V141H457.4z"/><path class="st0" d="M485.8,141.4c-3.1,0-5.9-0.6-8.2-1.9s-4.1-3-5.4-5.1s-1.9-4.6-1.9-7.5c0-2.8,0.6-5.3,1.9-7.5s3-3.9,5.2-5.1s4.7-1.9,7.5-1.9c2.7,0,5.2,0.6,7.3,1.8s3.8,2.9,5.1,5.1s1.8,4.8,1.8,7.7c0,0.2,0,0.5,0,0.9s-0.1,0.7-0.1,1h-23.4v-4.4h20l-2.6,1.4c0-1.6-0.3-3-1-4.2s-1.6-2.2-2.8-2.9s-2.6-1-4.2-1c-1.6,0-3,0.3-4.2,1s-2.2,1.7-2.9,2.9s-1,2.7-1,4.4v1c0,1.7,0.4,3.2,1.1,4.5s1.8,2.3,3.2,3s3,1.1,4.9,1.1c1.6,0,3-0.3,4.3-0.8s2.4-1.3,3.4-2.3l3.6,4.1c-1.3,1.5-2.9,2.6-4.8,3.4C490.4,141,488.3,141.4,485.8,141.4z"/><path class="st0" d="M514.1,141.4c-2.4,0-4.7-0.3-6.8-0.9s-3.9-1.4-5.2-2.2l2.5-5c1.3,0.8,2.8,1.5,4.5,2s3.5,0.8,5.3,0.8c2,0,3.5-0.3,4.4-0.8s1.4-1.3,1.4-2.2c0-0.8-0.3-1.4-0.9-1.8s-1.5-0.7-2.5-0.9s-2.1-0.4-3.4-0.6s-2.5-0.4-3.7-0.7s-2.4-0.7-3.4-1.3s-1.8-1.4-2.5-2.3s-0.9-2.3-0.9-4c0-1.8,0.5-3.3,1.5-4.6s2.5-2.3,4.3-3.1s4-1.1,6.6-1.1c1.9,0,3.8,0.2,5.7,0.7s3.6,1,4.9,1.8l-2.6,5c-1.3-0.8-2.6-1.3-4-1.6s-2.7-0.4-4.1-0.4c-2,0-3.4,0.3-4.4,0.9s-1.5,1.3-1.5,2.2c0,0.8,0.3,1.5,0.9,1.9s1.5,0.7,2.5,1s2.1,0.4,3.4,0.6s2.5,0.4,3.7,0.7s2.4,0.7,3.4,1.3s1.9,1.3,2.5,2.3s0.9,2.3,0.9,3.8c0,1.8-0.5,3.3-1.6,4.6s-2.5,2.3-4.4,3S516.7,141.4,514.1,141.4z"/><path class="st0" d="M549.4,151.6c-1.4,0-2.8-0.2-4.2-0.7s-2.5-1.1-3.4-1.9l2.6-4.8c0.7,0.6,1.4,1,2.2,1.4s1.7,0.5,2.6,0.5c1.2,0,2.2-0.3,2.9-0.9s1.4-1.6,2.1-3.1l1.6-3.6l0.6-0.8l10.6-24.9h6.3l-13.2,30.4c-0.9,2.1-1.9,3.7-2.9,4.9s-2.3,2.1-3.6,2.6S550.9,151.6,549.4,151.6z M555.1,142l-12.7-29.1h6.8l10.4,24.3L555.1,142z"/><path class="st0" d="M609.8,141.5c-2.9,0-5.5-0.5-7.9-1.4s-4.5-2.2-6.3-4s-3.2-3.7-4.2-6s-1.5-4.8-1.5-7.6c0-2.8,0.5-5.3,1.5-7.6s2.4-4.3,4.2-6s3.9-3,6.3-4s5.1-1.4,8-1.4c3.1,0,5.9,0.5,8.4,1.5s4.6,2.5,6.3,4.5l-4.3,4.2c-1.4-1.4-3-2.5-4.7-3.2s-3.5-1-5.5-1c-2,0-3.8,0.3-5.4,0.9s-3,1.5-4.2,2.7s-2.1,2.5-2.8,4.1s-1,3.3-1,5.2c0,1.9,0.3,3.6,1,5.2s1.6,3,2.8,4.1s2.6,2.1,4.2,2.7s3.4,0.9,5.4,0.9c1.8,0,3.6-0.3,5.3-0.9s3.3-1.5,4.9-2.9l3.8,5.1c-1.9,1.5-4.1,2.7-6.6,3.5S612.5,141.5,609.8,141.5z M617.8,135.9v-13.7h6.4v14.6z"/><path class="st0" d="M632.7,141v-28.1h6.3v7.7l-0.7-2.3c0.8-1.9,2.1-3.3,4-4.3s4.1-1.5,6.7-1.5v6.3c-0.2,0-0.5-0.1-0.7-0.1s-0.5,0-0.7,0c-2.5,0-4.5,0.7-6,2.2s-2.2,3.6-2.2,6.6V141z"/><path class="st0" d="M661,141.4c-2.1,0-4-0.4-5.5-1.1s-2.8-1.7-3.7-3s-1.3-2.7-1.3-4.3c0-1.6,0.4-3,1.1-4.3s2-2.3,3.7-3s4-1.1,6.9-1.1h8.2v4.4h-7.7c-2.2,0-3.7,0.4-4.5,1.1s-1.2,1.6-1.2,2.7c0,1.2,0.5,2.1,1.4,2.8s2.3,1,4,1c1.6,0,3.1-0.4,4.3-1.1s2.2-1.8,2.8-3.3l1,4c-0.6,1.6-1.8,2.9-3.4,3.8S663.5,141.4,661,141.4z M669.8,141v-5.7l-0.3-1.2v-10c0-1.9-0.6-3.4-1.8-4.5s-3-1.6-5.3-1.6c-1.5,0-3.1,0.2-4.6,0.7s-2.8,1.2-3.9,2.1l-2.6-4.8c1.5-1.2,3.3-2,5.4-2.6s4.2-0.9,6.5-0.9c4.1,0,7.3,1,9.5,3s3.3,5,3.3,9.1V141z"/><path class="st0" d="M700.4,112.5c2.3,0,4.3,0.4,6,1.3s3.1,2.2,4.2,4.1s1.5,4.2,1.5,7V141h-6.6v-15.3c0-2.5-0.6-4.4-1.7-5.6s-2.8-1.8-4.9-1.8c-1.5,0-2.9,0.3-4.1,0.9s-2.1,1.6-2.8,2.8s-1,2.8-1,4.7V141h-6.5v-28.1h6.3v7.6l-1.1-2.4c0.9-1.8,2.4-3.2,4.2-4.2S698,112.5,700.4,112.5z"/><path class="st0" d="M723.9,108.2c-1.2,0-2.2-0.4-3-1.2s-1.2-1.7-1.2-2.8c0-1,0.4-2,1.2-2.7s1.8-1.2,3-1.2s2.2,0.4,3,1.1s1.2,1.6,1.2,2.8c0,1.1-0.4,2.1-1.2,2.9C726.1,107.8,725.1,108.2,723.9,108.2z M720.6,141v-28.1h6.5V141z"/><path class="st0" d="M732,118.3v-5.3h18.8v5.3H732z M746.4,141.4c-3.1,0-5.5-0.8-7.2-2.4s-2.5-3.9-2.5-7v-25.3h6.5v25.1c0,1.3,0.3,2.4,1,3.1s1.7,1.1,3,1.1c1.4,0,2.6-0.4,3.6-1.2l1.9,4.7c-0.8,0.6-1.8,1.1-2.9,1.4S747.5,141.4,746.4,141.4z"/><path class="st0" d="M769.8,141.4c-2.8,0-5.4-0.6-7.7-1.9s-4.1-3-5.3-5.1s-1.9-4.7-1.9-7.4c0-2.8,0.7-5.3,1.9-7.5s3.1-3.8,5.3-5.1s4.8-1.9,7.7-1.9c2.9,0,5.5,0.6,7.8,1.9s4,2.9,5.3,5.1s1.9,4.6,1.9,7.5c0,2.8-0.6,5.3-1.9,7.5s-3.1,3.9-5.3,5.1S772.7,141.4,769.8,141.4z M769.8,135.8c1.6,0,3.1-0.4,4.3-1.1s2.2-1.8,3-3.1s1.1-2.9,1.1-4.7c0-1.8-0.4-3.3-1.1-4.7s-1.7-2.3-3-3.1s-2.7-1.1-4.3-1.1c-1.6,0-3,0.4-4.3,1.1s-2.3,1.7-3,3.1s-1.1,2.9-1.1,4.7c0,1.8,0.4,3.3,1.1,4.7s1.7,2.4,3,3.1S768.2,135.8,769.8,135.8z"/><path class="st0" d="M799.9,141.4c-2.4,0-4.7-0.3-6.8-0.9s-3.9-1.4-5.2-2.2l2.5-5c1.3,0.8,2.8,1.5,4.5,2s3.5,0.8,5.3,0.8c2,0,3.5-0.3,4.4-0.8s1.4-1.3,1.4-2.2c0-0.8-0.3-1.4-0.9-1.8s-1.5-0.7-2.5-0.9s-2.1-0.4-3.4-0.6s-2.5-0.4-3.7-0.7s-2.4-0.7-3.4-1.3s-1.8-1.4-2.5-2.3s-0.9-2.3-0.9-4c0-1.8,0.5-3.3,1.5-4.6s2.5-2.3,4.3-3.1s4-1.1,6.6-1.1c1.9,0,3.8,0.2,5.7,0.7s3.6,1,4.9,1.8l-2.6,5c-1.3-0.8-2.6-1.3-4-1.6s-2.7-0.4-4.1-0.4c-2,0-3.4,0.3-4.4,0.9s-1.5,1.3-1.5,2.2c0,0.8,0.3,1.5,0.9,1.9s1.5,0.7,2.5,1s2.1,0.4,3.4,0.6s2.5,0.4,3.7,0.7s2.4,0.7,3.4,1.3s1.9,1.3,2.5,2.3s0.9,2.3,0.9,3.8c0,1.8-0.5,3.3-1.5,4.6s-2.5,2.3-4.4,3S802.5,141.4,799.9,141.4z"/><path class="st0" d="M432.4,204.7c-2.8,0-5.5-0.5-7.9-1.4s-4.6-2.3-6.3-4s-3.2-3.7-4.2-6s-1.5-4.8-1.5-7.5c0-2.7,0.5-5.3,1.5-7.5s2.4-4.3,4.2-6s3.9-3.1,6.3-4s5.1-1.4,8-1.4c2.9,0,5.5,0.5,7.9,1.4s4.5,2.3,6.3,4s3.1,3.7,4.1,6s1.5,4.8,1.5,7.6s-0.5,5.3-1.5,7.6s-2.4,4.3-4.1,6s-3.9,3-6.3,4S435.3,204.7,432.4,204.7z M432.4,198.7c1.9,0,3.6-0.3,5.1-0.9s2.9-1.5,4.1-2.7s2.1-2.6,2.7-4.1s0.9-3.3,0.9-5.2c0-1.9-0.3-3.6-0.9-5.2s-1.5-2.9-2.7-4.1s-2.5-2.1-4.1-2.7s-3.3-0.9-5.1-0.9s-3.6,0.3-5.2,0.9s-3,1.5-4.1,2.7s-2.1,2.5-2.7,4.1s-1,3.3-1,5.2c0,1.9,0.3,3.6,1,5.2s1.6,3,2.7,4.1s2.5,2.1,4.1,2.7S430.6,198.7,432.4,198.7z M444.5,212.3c-1.3,0-2.6-0.2-3.8-0.5s-2.4-0.8-3.6-1.5s-2.4-1.6-3.7-2.7s-2.6-2.5-4.2-4.1l7.3-1.8c1,1.3,1.9,2.3,2.8,3.1s1.8,1.3,2.6,1.7s1.7,0.5,2.6,0.5c2.5,0,4.6-1,6.4-3l3.1,3.8C451.6,210.8,448.4,212.3,444.5,212.3z"/><path class="st0" d="M475.3,204.7c-5,0-9-1.4-11.8-4.3s-4.3-7-4.3-12.4v-20.7h6.9v20.5c0,3.8,0.8,6.5,2.5,8.3s3.9,2.6,6.9,2.6c3,0,5.3-0.9,6.9-2.6s2.4-4.5,2.4-8.3v-20.5h6.7v20.7c0,5.4-1.4,9.5-4.3,12.4S480.3,204.7,475.3,204.7z"/><path class="st0" d="M501,204.2v-36.9h6.9v36.9H501z"/><path class="st0" d="M517.9,204.2v-36.9h6.9v31.1H544v5.8H517.9z"/><path class="st0" d="M549.4,204.2v-36.9h5.6l16.1,26.9h-3l15.9-26.9h5.6l0.1,36.9h-6.6v-26.7h1.3L571.2,200h-3.1l-13.7-22.5h1.6v26.7z"/><path class="st0" d="M606.5,198.4h20.8v5.8h-27.7v-36.9h26.9v5.8h-20.1V198.4z M606,182.6h18.3v5.6H606V182.6z"/><path class="st0" d="M646.4,204.7c-2.9,0-5.6-0.4-8.2-1.2s-4.7-1.9-6.3-3.2l2.4-5.3c1.5,1.2,3.3,2.1,5.5,2.9s4.4,1.2,6.7,1.2c1.9,0,3.5-0.2,4.7-0.6s2.1-1,2.6-1.7s0.8-1.5,0.8-2.5c0-1.1-0.4-2-1.2-2.7s-1.9-1.2-3.1-1.6s-2.7-0.8-4.3-1.1s-3.1-0.7-4.7-1.2s-3-1.1-4.3-1.9s-2.3-1.8-3.1-3s-1.2-2.9-1.2-4.8c0-2,0.5-3.8,1.6-5.5s2.7-3,4.9-4s5-1.5,8.3-1.5c2.2,0,4.4,0.3,6.6,0.8s4.1,1.4,5.7,2.4l-2.2,5.3c-1.6-1-3.3-1.7-5.1-2.2s-3.4-0.7-5.1-0.7c-1.9,0-3.4,0.2-4.6,0.7s-2.1,1.1-2.6,1.8s-0.8,1.6-0.8,2.5c0,1.1,0.4,2,1.2,2.7s1.8,1.2,3.1,1.6s2.7,0.8,4.3,1.1s3.1,0.8,4.7,1.2s3,1.1,4.3,1.8s2.3,1.8,3.1,3s1.2,2.8,1.2,4.8c0,2-0.5,3.8-1.6,5.4s-2.7,3-4.9,4S649.8,204.7,646.4,204.7z"/></g>
       </svg>
@@ -190,198 +107,112 @@ tbody td.td-p input{text-align:right;font-weight:600;}
     </div>
   </div>
 
-  <!-- BANDA CLIENTE -->
   <div class="banda">
-    <div class="banda-item banda-fecha">
+    <div class="banda-item">
       <label>Fecha</label>
-      <input type="date" id="fechaRaw" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" oninput="sincFecha()"/>
-      <input type="text" id="fecha" placeholder="DD/MM/AAAA" readonly style="cursor:pointer;min-width:100px;"
-        onclick="document.getElementById('fechaRaw').showPicker?document.getElementById('fechaRaw').showPicker():document.getElementById('fechaRaw').click()"/>
+      <input type="text" id="fecha" placeholder="DD/MM/AAAA"/>
     </div>
-    <div class="banda-item banda-cliente">
+    <div class="banda-item banda-cliente" style="flex:2;">
       <label>Cliente / Empresa</label>
-      <input type="text" id="cliente" placeholder="Nombre o razón social"/>
+      <input type="text" id="cliente" placeholder="Nombre del cliente"/>
     </div>
-    <div class="banda-item banda-tel">
+    <div class="banda-item" style="flex:1;">
       <label>Teléfono</label>
-      <input type="text" id="telCliente" placeholder="+54 11 0000-0000" style="min-width:150px;"/>
-    </div>
-    <div class="banda-item banda-mail">
-      <label>Correo electrónico</label>
-      <input type="email" id="mailCliente" placeholder="cliente@email.com"/>
+      <input type="text" id="telCliente" placeholder="Teléfono"/>
     </div>
   </div>
 
-  <!-- BANDA INFERIOR -->
-  <div class="banda-inferior">
-    <div class="banda-inf-item">
-      <label>Plazo de entrega estimado</label>
-      <input type="text" id="plazo" placeholder="Ej: 15–20 días hábiles"/>
-    </div>
-    <div class="validez-wrap">
-      <span class="validez-label">Validez</span>
-      <div class="validez-chips">
-        <button class="chip-v" onclick="setV('7',this)">7 días</button>
-        <button class="chip-v activo" onclick="setV('15',this)">15 días</button>
-        <button class="chip-v" onclick="setV('30',this)">30 días</button>
-        <div class="chip-v-custom" id="wrapC" onclick="setV('custom',this)">
-          <input type="text" id="vCustom" placeholder="–" maxlength="3"
-            onclick="event.stopPropagation();setV('custom',document.getElementById('wrapC'))"
-            oninput="event.stopPropagation()"/>
-          <span>días</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CUERPO -->
   <div class="cuerpo">
-
-    <!-- TABLA -->
     <div>
       <div class="sec-titulo">Detalle de trabajos y materiales</div>
       <div class="tabla-wrap">
         <table>
           <thead>
             <tr>
-              <th style="width:17%">Trabajo</th>
-              <th style="width:22%">Material</th>
-              <th style="width:15%">Bacha</th>
-              <th style="width:12%">Largo</th>
-              <th style="width:12%">Ancho</th>
-              <th class="th-r" style="width:17%">Precio</th>
+              <th style="width:25%">Trabajo</th>
+              <th style="width:35%">Material</th>
+              <th style="width:15%">Medidas</th>
+              <th style="width:20%; text-align:right;">Precio</th>
               <th style="width:5%"></th>
             </tr>
           </thead>
-          <tbody id="tablaItems"></tbody>
+          <tbody id="tablaItems">
+              </tbody>
         </table>
       </div>
-      <button class="btn-add" onclick="addFila()">+ Agregar ítem</button>
+      <button class="btn-add" onclick="addFila()" style="color:var(--verde); border: 1px dashed var(--verde); padding: 5px 10px; cursor:pointer; background:none; margin-top:10px;">+ Agregar ítem</button>
     </div>
 
-    <!-- TOTALES -->
     <div class="totales-wrap">
       <div class="totales-box">
-        <div class="t-row">
-          <span class="lbl">Subtotal</span>
-          <span class="val"><input type="text" id="subInput" placeholder="$ 0,00" oninput="subManual=true;calcSub()"/></span>
-        </div>
-        <div class="t-row">
-          <span class="lbl">Descuento</span>
-          <span class="val"><input type="text" id="desc" placeholder="$ 0" oninput="calcSub()"/></span>
-        </div>
         <div class="t-row t-grande">
-          <span class="lbl">Total</span>
-          <span class="val"><input type="text" id="totalInput" placeholder="$ 0,00" oninput="totManual=true;calcSenia()"/></span>
-        </div>
-        <div class="t-row t-senia">
-          <span class="lbl">Monto de seña (50%)</span>
-          <span class="val" id="seniaDisplay">$ 0,00</span>
+          <span style="font-size:10px; font-weight:700;">TOTAL</span>
+          <span><input type="text" id="totalInput" placeholder="$ 0,00" style="background:transparent; border:none; color:#fff; text-align:right; font-weight:700; font-size:18px; outline:none;"/></span>
         </div>
       </div>
     </div>
 
-    <!-- CONDICIONES -->
     <div>
-      <div class="sec-titulo">Condiciones</div>
-      <div class="cond-bloque" id="condWrap"></div>
-      <button class="btn-add" onclick="addCond()" style="margin-top:10px;">+ Agregar condición</button>
+        <div class="sec-titulo">Observaciones</div>
+        <textarea style="width:100%; height:80px; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:inherit; font-size:12px;" placeholder="Escribe aquí notas adicionales..."></textarea>
     </div>
-
-    <!-- PLANOS -->
-    <div id="seccionPlanos" class="sin-imagen">
-      <div class="sec-titulo">Planos / croquis <span id="tagOpc" style="font-weight:400;font-style:italic;letter-spacing:0;color:#aaa;font-size:9px;">(opcional)</span></div>
-      <div class="planos-zona" onclick="document.getElementById('inputPlano').click()">
-        <div class="planos-txt planos-hint">Hacé clic para adjuntar un plano o croquis</div>
-        <div class="planos-sub planos-hint">PNG o SVG exportado desde Illustrator u otra herramienta</div>
-        <img id="previewPlano" src="" alt="Plano"/>
-        <button class="btn-quitar-plano" id="btnQP" onclick="quitarPlano(event)">Quitar plano</button>
-      </div>
-      <input type="file" id="inputPlano" accept="image/png,image/svg+xml" onchange="cargPlano(event)"/>
-    </div>
-
-    <!-- OBSERVACIONES -->
-    <div>
-      <div class="sec-titulo">Observaciones</div>
-      <textarea class="obs-input" id="obs" placeholder="Aclaraciones adicionales, materiales alternativos, notas de instalación..."></textarea>
-    </div>
-
   </div>
 
-  <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-ct">
-      <div class="footer-ct-title">Contacto</div>
-      <div class="linea"><span id="lk-t1"></span><input type="text" id="tel1" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/></div>
-      <div class="linea"><span id="lk-t2"></span><input type="text" id="tel2" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/></div>
-      <div class="linea"><span id="lk-dir"></span><input type="text" id="dirLocal" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/></div>
-      <div class="linea"><span id="lk-email"></span><input type="text" id="emailLocal" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" aria-hidden="true"/></div>
-      <button id="btnEditarCt" onclick="abrirModal()"
-        style="margin-top:10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-               background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.65);
-               border-radius:5px;padding:5px 12px;cursor:pointer;">
-        Editar datos de contacto
-      </button>
-    </div>
-    <div class="footer-firma">
-      Mármoles y Granitos Quilmes<br/>
-      Documento no fiscal · Presupuesto de trabajo
-    </div>
-  </div>
-</div>
-
-<!-- MODAL -->
-<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:9999;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:14px;padding:30px;width:100%;max-width:420px;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.22);font-family:'Montserrat',sans-serif;">
-    <div style="font-size:14px;font-weight:700;color:var(--texto);margin-bottom:18px;">Datos de contacto del local</div>
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div><label style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--gris);display:block;margin-bottom:4px;">WhatsApp 1</label><input id="m-t1" type="text" style="font-family:'Montserrat',sans-serif;font-size:13px;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/></div>
-      <div><label style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--gris);display:block;margin-bottom:4px;">WhatsApp 2</label><input id="m-t2" type="text" style="font-family:'Montserrat',sans-serif;font-size:13px;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/></div>
-      <div><label style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--gris);display:block;margin-bottom:4px;">Dirección</label><input id="m-dir" type="text" style="font-family:'Montserrat',sans-serif;font-size:13px;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/></div>
-      <div><label style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--gris);display:block;margin-bottom:4px;">Email</label><input id="m-email" type="text" style="font-family:'Montserrat',sans-serif;font-size:13px;color:var(--texto);background:var(--gris-claro);border:1.5px solid transparent;border-radius:8px;padding:10px 14px;width:100%;outline:none;"/></div>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end;">
-      <button onclick="cerrarModal(false)" style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;background:#fff;color:var(--gris);border:1.5px solid var(--borde);border-radius:7px;padding:9px 18px;cursor:pointer;">Cancelar</button>
-      <button onclick="cerrarModal(true)" style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;background:var(--verde);color:#fff;border:none;border-radius:7px;padding:9px 18px;cursor:pointer;">Guardar</button>
-    </div>
+    <div style="font-size:12px;">Mármoles y Granitos Quilmes</div>
+    <div style="font-size:10px; opacity:0.7;">Presupuesto de Trabajo · 2026</div>
   </div>
 </div>
 
 <script>
-function numDef(){const h=new Date();return String(h.getDate()).padStart(2,'0')+String(h.getMonth()+1).padStart(2,'0')+String(h.getFullYear()).slice(-2);}
-function sincFecha(){const r=document.getElementById('fechaRaw').value;if(!r)return;const[y,m,d]=r.split('-');document.getElementById('fecha').value=d+'/'+m+'/'+y;}
-function setFechaHoy(){const h=new Date(),dd=String(h.getDate()).padStart(2,'0'),mm=String(h.getMonth()+1).padStart(2,'0'),yy=h.getFullYear();document.getElementById('fechaRaw').value=yy+'-'+mm+'-'+dd;document.getElementById('fecha').value=dd+'/'+mm+'/'+yy;}
-let validez='15';
-function setV(v,el){document.querySelectorAll('.chip-v').forEach(c=>c.classList.remove('activo'));document.getElementById('wrapC').classList.remove('activo');if(v==='custom'){document.getElementById('wrapC').classList.add('activo');document.getElementById('vCustom').focus();}else{el.classList.add('activo');}validez=v;}
-function getV(){if(validez==='custom'){const v=document.getElementById('vCustom').value;return v?v+' días':'';}return validez+' días';}
-window.onload=()=>{setFechaHoy();const n=numDef();document.getElementById('inputNumero').value=n;addFila();addFila();addFila();cargarCondsDef();cargarStorage();updFooter();};
-let fid=0;
-function addFila(){fid++;const id=fid;const tr=document.createElement('tr');tr.id='f-'+id;tr.innerHTML=`<td><input type="text" placeholder="Ej: Mesada cocina"/></td><td><input type="text" placeholder="Ej: Granito Negro Brasil 2cm"/></td><td><input type="text" placeholder="Ej: Simple embutir"/></td><td><input type="text" placeholder="220 cm"/></td><td><input type="text" placeholder="62 cm"/></td><td class="td-p"><input type="text" id="p-${id}" placeholder="0" oninput="calcFilas()" style="font-weight:600;color:var(--verde);text-align:right;"/></td><td><button class="btn-del" onclick="delFila(${id})">✕</button></td>`;document.getElementById('tablaItems').appendChild(tr);}
-function delFila(id){document.getElementById('f-'+id)?.remove();calcFilas();}
-function pM(s){if(!s)return 0;return parseFloat(s.replace(/\./g,'').replace(',','.').replace(/[^0-9.]/g,''))||0;}
-function fM(n){return '$ '+n.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});}
-let subManual=false,totManual=false;
-function calcFilas(){subManual=false;totManual=false;let s=0;document.querySelectorAll('#tablaItems tr').forEach(tr=>{const i=tr.querySelector('td.td-p input');if(i)s+=pM(i.value);});document.getElementById('subInput').value=fM(s);calcSub();}
-function calcSub(){if(!totManual){const s=pM(document.getElementById('subInput').value),d=pM(document.getElementById('desc').value);document.getElementById('totalInput').value=fM(Math.max(0,s-d));}calcSenia();}
-function calcSenia(){const t=pM(document.getElementById('totalInput').value);document.getElementById('seniaDisplay').textContent=fM(t/2);}
-const CONDS_DEF=['Presupuesto válido por {validez} a partir de la fecha de emisión.','Todas las medidas deberán rectificarse en obra.','El trabajo se seña con el 50% al comenzar y se saldará una vez instalado y terminado.','Envío y colocación sin cargo.','El precio no incluye IVA. Forma de pago: efectivo o transferencia.'];
-let cid=0;
-function addCond(txt=''){cid++;const id=cid;const d=document.createElement('div');d.className='cond-linea';d.id='c-'+id;d.innerHTML=`<div class="cond-dot"></div><div style="flex:1;"><input type="text" value="${txt.replace(/"/g,'&quot;')}" placeholder="Escribí la condición..."/></div><button class="btn-del-c" onclick="document.getElementById('c-${id}').remove()">✕</button>`;document.getElementById('condWrap').appendChild(d);}
-function cargarCondsDef(){CONDS_DEF.forEach(c=>addCond(c));}
-function cargPlano(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{document.getElementById('previewPlano').src=ev.target.result;document.getElementById('previewPlano').style.display='block';document.getElementById('btnQP').style.display='inline-block';document.querySelectorAll('.planos-hint').forEach(el=>el.style.display='none');document.getElementById('tagOpc').style.display='none';document.getElementById('seccionPlanos').classList.remove('sin-imagen');};r.readAsDataURL(f);}
-function quitarPlano(e){e.stopPropagation();document.getElementById('previewPlano').style.display='none';document.getElementById('previewPlano').src='';document.getElementById('btnQP').style.display='none';document.querySelectorAll('.planos-hint').forEach(el=>el.style.display='');document.getElementById('inputPlano').value='';document.getElementById('tagOpc').style.display='';document.getElementById('seccionPlanos').classList.add('sin-imagen');}
-function updFooter(){const t1=document.getElementById('tel1').value,t2=document.getElementById('tel2').value,dir=document.getElementById('dirLocal').value,em=document.getElementById('emailLocal').value;const ph='color:rgba(255,255,255,.25);font-size:12px;';function tH(n){const l=n.replace(/[^\d+]/g,'');return l?`<a href="https://wa.me/${l.replace('+','')}" target="_blank" class="footer-link">📞 ${n}</a>`:`<span style="${ph}">📞 Sin número cargado</span>`;}function dH(a){return a?`<a href="https://maps.google.com/?q=${encodeURIComponent(a)}" target="_blank" class="footer-link">📍 ${a}</a>`:`<span style="${ph}">📍 Sin dirección cargada</span>`;}function eH(m){return m?`<a href="mailto:${m}" class="footer-link">✉️ ${m}</a>`:`<span style="${ph}">✉️ Sin email cargado</span>`;}document.getElementById('lk-t1').innerHTML=tH(t1);document.getElementById('lk-t2').innerHTML=tH(t2);document.getElementById('lk-dir').innerHTML=dH(dir);document.getElementById('lk-email').innerHTML=eH(em);}
-function abrirModal(){document.getElementById('m-t1').value=document.getElementById('tel1').value;document.getElementById('m-t2').value=document.getElementById('tel2').value;document.getElementById('m-dir').value=document.getElementById('dirLocal').value;document.getElementById('m-email').value=document.getElementById('emailLocal').value;document.getElementById('modal').style.display='flex';}
-function cerrarModal(g){if(g){document.getElementById('tel1').value=document.getElementById('m-t1').value;document.getElementById('tel2').value=document.getElementById('m-t2').value;document.getElementById('dirLocal').value=document.getElementById('m-dir').value;document.getElementById('emailLocal').value=document.getElementById('m-email').value;['tel1','tel2','dirLocal','emailLocal'].forEach(id=>localStorage.setItem('mgq_'+id,document.getElementById(id).value));updFooter();}document.getElementById('modal').style.display='none';}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)cerrarModal(false);});
-function cargarStorage(){const map={tel1:'tel1',tel2:'tel2',dirLocal:'dirLocal',emailLocal:'emailLocal'};Object.entries(map).forEach(([k,id])=>{const v=localStorage.getItem('mgq_'+k);if(v)document.getElementById(id).value=v;});}
-function limpiarTodo(){if(!confirm('¿Limpiar todos los campos?'))return;document.getElementById('tablaItems').innerHTML='';fid=0;subManual=false;totManual=false;addFila();addFila();addFila();document.getElementById('condWrap').innerHTML='';cid=0;cargarCondsDef();['cliente','telCliente','mailCliente','plazo','desc','obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});['subInput','totalInput'].forEach(id=>document.getElementById(id).value='$ 0,00');document.getElementById('seniaDisplay').textContent='$ 0,00';const n=numDef();document.getElementById('inputNumero').value=n;quitarPlano({stopPropagation:()=>{}});setFechaHoy();document.querySelectorAll('.chip-v').forEach(c=>c.classList.remove('activo'));document.querySelectorAll('.chip-v')[1].classList.add('activo');document.getElementById('wrapC').classList.remove('activo');validez='15';}
-async function genPDF(){const sp=document.getElementById('seccionPlanos'),hi=!sp.classList.contains('sin-imagen');document.querySelectorAll('.btn-add,.btn-del,.btn-quitar-plano,.btn-del-c').forEach(el=>el.style.visibility='hidden');document.querySelectorAll('.planos-hint').forEach(el=>el.style.display='none');document.getElementById('btnEditarCt').style.display='none';if(!hi)sp.style.display='none';const doc=document.getElementById('documento'),A4=794,prev=doc.getAttribute('style')||'';doc.style.cssText+=';width:'+A4+'px!important;max-width:'+A4+'px!important;border-radius:0!important;';await new Promise(r=>setTimeout(r,120));const canvas=await html2canvas(doc,{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false,width:A4,height:doc.scrollHeight,windowWidth:A4,windowHeight:doc.scrollHeight});doc.setAttribute('style',prev);if(!hi)sp.style.display='';document.getElementById('btnEditarCt').style.display='';document.querySelectorAll('.btn-add,.btn-del,.btn-quitar-plano,.btn-del-c').forEach(el=>el.style.visibility='');document.querySelectorAll('.planos-hint').forEach(el=>el.style.display='');const{jsPDF}=window.jspdf,pW=210,pH=(canvas.height/canvas.width)*pW,pdf=new jsPDF({orientation:'portrait',unit:'mm',format:[pW,pH]});pdf.addImage(canvas.toDataURL('image/jpeg',.95),'JPEG',0,0,pW,pH);const num=document.getElementById('inputNumero').value||numDef(),fn='MYGQpresupuesto'+num+'.pdf';pdf.save(fn);return fn;}
-async function descargarPDF(){const b=document.querySelector('.btn-primary');b.textContent='⏳ Generando...';b.disabled=true;try{await genPDF();}catch(e){alert('Error: '+e.message);}finally{b.textContent='⬇ Descargar PDF';b.disabled=false;}}
-const IWA=`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WA Cliente`;
-const IGM=`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg> Gmail Cliente`;
-async function abrirWA(){const tel=document.getElementById('telCliente').value,l=tel.replace(/[^\d+]/g,'');if(!l){alert('Completá el Teléfono cliente.');return;}const b=document.getElementById('btnWa');b.textContent='⏳ Generando...';b.disabled=true;try{const fn=await genPDF(),cli=document.getElementById('cliente').value,num=document.getElementById('inputNumero').value,tot=document.getElementById('totalInput').value,v=getV();let msg=`¡Hola${cli?' '+cli:''}! Te enviamos el presupuesto N°${num} de Mármoles y Granitos Quilmes.`;if(tot&&tot!=='$ 0,00')msg+=`\nTotal: ${tot}`;if(v)msg+=`\nVálido por ${v}.`;msg+=`\n\n📎 El PDF "${fn}" ya se descargó — adjuntalo en esta conversación.`;window.open('https://wa.me/'+l.replace('+','')+'?text='+encodeURIComponent(msg),'_blank');}catch(e){alert('Error: '+e.message);}finally{b.innerHTML=IWA;b.disabled=false;}}
-async function abrirGmail(){const mail=document.getElementById('mailCliente').value;if(!mail){alert('Completá el correo del cliente.');return;}const b=document.getElementById('btnGm');b.textContent='⏳ Generando...';b.disabled=true;try{const fn=await genPDF(),cli=document.getElementById('cliente').value,num=document.getElementById('inputNumero').value,tot=document.getElementById('totalInput').value,v=getV(),subj=encodeURIComponent(`Presupuesto N°${num} – Mármoles y Granitos Quilmes`);let body=`Hola${cli?' '+cli:''},\n\nTe enviamos el presupuesto N°${num} de Mármoles y Granitos Quilmes.\n`;if(tot&&tot!=='$ 0,00')body+=`Total: ${tot}\n`;if(v)body+=`Válido por ${v}.\n`;body+=`\nEl PDF "${fn}" ya se descargó — adjuntalo a este mail antes de enviarlo.\n\nSaludos,\nMármoles y Granitos Quilmes`;window.open('https://mail.google.com/mail/?view=cm&to='+encodeURIComponent(mail)+'&su='+subj+'&body='+encodeURIComponent(body),'_blank');}catch(e){alert('Error: '+e.message);}finally{b.innerHTML=IGM;b.disabled=false;}}
+let fid = 0;
+
+// Función para ajustar altura de textareas automáticamente
+function autoGrow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight) + "px";
+}
+
+function addFila() {
+    fid++;
+    const tr = document.createElement('tr');
+    tr.id = 'f-' + fid;
+    tr.innerHTML = `
+        <td><textarea oninput="autoGrow(this)" placeholder="Ej: Mesada de Cocina"></textarea></td>
+        <td><textarea oninput="autoGrow(this)" placeholder="Ej: GRANITO WHITE GALAXY"></textarea></td>
+        <td><textarea oninput="autoGrow(this)" placeholder="2.40 x 0.60 m"></textarea></td>
+        <td style="text-align:right;"><input type="text" placeholder="$ 0" style="text-align:right; border:none; width:100%; font-weight:700; outline:none; font-family:inherit;"></td>
+        <td><button onclick="document.getElementById('f-${fid}').remove()" style="border:none; background:none; color:red; cursor:pointer;">✕</button></td>
+    `;
+    document.getElementById('tablaItems').appendChild(tr);
+}
+
+// Inicializar con algunas filas
+window.onload = () => {
+    for(let i=0; i<3; i++) addFila();
+    const hoy = new Date();
+    document.getElementById('fecha').value = hoy.toLocaleDateString();
+};
+
+async function descargarPDF() {
+    const doc = document.getElementById('documento');
+    const canvas = await html2canvas(doc, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save("Presupuesto_MGQ.pdf");
+}
+
+function abrirWA() {
+    const tel = document.getElementById('telCliente').value;
+    const msg = encodeURIComponent("Hola, te envío el presupuesto de Mármoles y Granitos Quilmes.");
+    window.open(`https://wa.me/${tel}?text=${msg}`, '_blank');
+}
 </script>
+
 </body>
 </html>
