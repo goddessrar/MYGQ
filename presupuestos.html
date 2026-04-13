@@ -18,6 +18,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--verde);color:var(--tex
 .btn-wa{background:#25d366;color:#fff;}
 .btn-gmail{background:#EA4335;color:#fff;}
 
+/* Contenedor Principal */
 #documento{max-width:860px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2);}
 
 .header{background:#fff;padding:30px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom: 1px solid var(--gris-claro);}
@@ -40,7 +41,7 @@ thead tr{background:var(--verde);color:#fff;}
 thead th{padding:12px 10px;text-align:left;font-size:9px;text-transform:uppercase;}
 tbody td{padding:12px 10px;vertical-align:top;border-bottom:1px solid var(--gris-claro);word-wrap: break-word; overflow: visible;}
 
-/* Estilos paraInputs/Textareas */
+/* Estilos de contenido */
 .cell-content, textarea, .input-precio {
     font-family: inherit; font-size: 12px; font-weight: 500; background: transparent; 
     border: none; width: 100%; outline: none; color: var(--texto); display: block;
@@ -62,7 +63,6 @@ textarea { resize: none; overflow: hidden; min-height: 20px; }
 @media print{
   body{background:white;padding:0;}
   .toolbar, .btn-add, .btn-del-row {display:none!important;}
-  #documento{box-shadow:none;border-radius:0;width:100%!important;}
 }
 </style>
 </head>
@@ -202,8 +202,8 @@ function addFila() {
     tr.id = 'f-' + fid;
     tr.innerHTML = `
         <td><textarea oninput="autoGrow(this)" placeholder="Ej: Mesada"></textarea></td>
-        <td><textarea oninput="autoGrow(this)" placeholder="Ej: GRANITO WHITE GALAXY"></textarea></td>
-        <td><textarea oninput="autoGrow(this)" placeholder="Ej: Mi Pileta"></textarea></td>
+        <td><textarea oninput="autoGrow(this)" placeholder="Ej: GRANITO..."></textarea></td>
+        <td><textarea oninput="autoGrow(this)" placeholder="Bacha"></textarea></td>
         <td><textarea oninput="autoGrow(this)" placeholder="Medidas"></textarea></td>
         <td style="text-align:right;"><input type="text" class="input-precio" oninput="recalcularTotal()" placeholder="$ 0"></td>
         <td class="btn-del-row"><button onclick="document.getElementById('f-${fid}').remove(); recalcularTotal();" style="border:none; background:none; color:red; cursor:pointer;">✕</button></td>
@@ -220,49 +220,62 @@ window.onload = () => {
 
 async function descargarPDF() {
     const btn = document.getElementById('btnPDF');
-    btn.textContent = "⏳ Procesando...";
+    const originalDoc = document.getElementById('documento');
+    btn.textContent = "⏳ Generando...";
     
-    // Clonar para limpiar
-    const doc = document.getElementById('documento');
-    const canvas = await html2canvas(doc, {
+    // Configuración para la captura
+    const canvas = await html2canvas(originalDoc, {
         scale: 2,
         useCORS: true,
-        onclone: (cloned) => {
-            // 1. Ocultar botones
-            cloned.querySelector('.btn-add').style.display = 'none';
-            cloned.querySelectorAll('.btn-del-row').forEach(b => b.style.display = 'none');
+        backgroundColor: "#ffffff",
+        width: 860, // Ancho fijo para evitar cortes laterales
+        onclone: (clonedDoc) => {
+            const clonedContainer = clonedDoc.getElementById('documento');
             
-            // 2. Ocultar Obs si está vacío
+            // 1. Forzar estilos de impresión en el clon
+            clonedContainer.style.width = "800px"; // Ligeramente menor para margen de seguridad
+            clonedContainer.style.margin = "0";
+            clonedContainer.style.borderRadius = "0";
+            clonedContainer.style.boxShadow = "none";
+            
+            // 2. Ocultar elementos innecesarios
+            clonedDoc.querySelector('.btn-add').style.display = 'none';
+            clonedDoc.querySelectorAll('.btn-del-row').forEach(b => b.style.display = 'none');
+            
             const obsVal = document.getElementById('obs').value.trim();
-            if(!obsVal) cloned.getElementById('wrapperObs').style.display = 'none';
+            if(!obsVal) clonedDoc.getElementById('wrapperObs').style.display = 'none';
 
-            // 3. TRANSFORMACIÓN CRÍTICA: Textarea -> Div para evitar cortes
-            cloned.querySelectorAll('textarea').forEach(ta => {
+            // 3. Convertir Textareas a Divs para que el texto fluya y no se corte
+            clonedDoc.querySelectorAll('textarea').forEach(ta => {
                 const div = document.createElement('div');
                 div.className = 'cell-content';
                 div.textContent = ta.value;
                 div.style.minHeight = '1.4em';
+                div.style.paddingBottom = '4px';
                 ta.parentNode.replaceChild(div, ta);
             });
 
-            // Reemplazar inputs de precio por texto simple en el clon
-            cloned.querySelectorAll('.input-precio').forEach(inp => {
-                const span = document.createElement('div');
-                span.className = 'cell-content';
-                span.style.textAlign = 'right';
-                span.style.fontWeight = '700';
-                span.textContent = inp.value || "$ 0,00";
-                inp.parentNode.replaceChild(span, inp);
+            // 4. Convertir Inputs a Divs
+            clonedDoc.querySelectorAll('input').forEach(inp => {
+                const div = document.createElement('div');
+                div.className = 'cell-content';
+                div.style.textAlign = getComputedStyle(inp).textAlign;
+                div.style.fontWeight = getComputedStyle(inp).fontWeight;
+                div.textContent = inp.value;
+                inp.parentNode.replaceChild(div, inp);
             });
         }
     });
 
-    const imgData = canvas.toDataURL('image/png');
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
     const { jsPDF } = window.jspdf;
-    const imgWidth = 210;
-    const pageHeight = (canvas.height * imgWidth) / canvas.width;
-    const pdf = new jsPDF('p', 'mm', [imgWidth, pageHeight]);
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, pageHeight);
+    
+    // Calculamos dimensiones del PDF basadas exactamente en el canvas generado
+    const pdfWidth = 210;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    
+    const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
+    pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
     
     const num = document.getElementById('inputNumero').value || "00";
     pdf.save(`MYGQPresupuesto${num}.pdf`);
@@ -278,7 +291,7 @@ function abrirWA() {
 function abrirGmail() {
     const mail = document.getElementById('mailCliente').value;
     const subject = encodeURIComponent(`Presupuesto N°${document.getElementById('inputNumero').value}`);
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${mail}&su=${subject}`, '_blank');
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${mail}&su=${subject}&body=${body}`, '_blank');
 }
 
 function limpiarTodo() { if(confirm("¿Limpiar todo?")) location.reload(); }
