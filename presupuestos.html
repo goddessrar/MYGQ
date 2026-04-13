@@ -18,8 +18,7 @@ body{font-family:'Montserrat',sans-serif;background:var(--verde);color:var(--tex
 .btn-wa{background:#25d366;color:#fff;}
 .btn-gmail{background:#EA4335;color:#fff;}
 
-/* Contenedor Principal */
-#documento{max-width:860px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+#documento{max-width:860px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2);width: 100%;}
 
 .header{background:#fff;padding:30px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom: 1px solid var(--gris-claro);}
 .logo-wrap{flex:1;min-width:0;}
@@ -32,16 +31,15 @@ body{font-family:'Montserrat',sans-serif;background:var(--verde);color:var(--tex
 
 .banda{background:var(--verde-bg);border-top:3px solid var(--verde);padding:16px 48px;display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;}
 .banda-item label{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--verde-oscuro);display:block;margin-bottom:4px;}
-.banda-item input{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--texto);background:transparent;border:none;border-bottom:1.5px solid var(--borde);padding:3px 0;width:100%;outline:none;}
+.banda-item input, .banda-item .val-clon {font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--texto);background:transparent;border:none;border-bottom:1.5px solid var(--borde);padding:3px 0;width:100%;outline:none;}
 
 .cuerpo{padding:40px 48px;display:flex;flex-direction:column;gap:32px;}
 .sec-titulo{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--verde-oscuro);border-bottom:1px solid var(--borde);padding-bottom:8px;margin-bottom:15px;}
 table{width:100%;border-collapse:collapse;table-layout: fixed;}
 thead tr{background:var(--verde);color:#fff;}
 thead th{padding:12px 10px;text-align:left;font-size:9px;text-transform:uppercase;}
-tbody td{padding:12px 10px;vertical-align:top;border-bottom:1px solid var(--gris-claro);word-wrap: break-word; overflow: visible;}
+tbody td{padding:12px 10px;vertical-align:top;border-bottom:1px solid var(--gris-claro);word-wrap: break-word;}
 
-/* Estilos de contenido */
 .cell-content, textarea, .input-precio {
     font-family: inherit; font-size: 12px; font-weight: 500; background: transparent; 
     border: none; width: 100%; outline: none; color: var(--texto); display: block;
@@ -52,7 +50,7 @@ textarea { resize: none; overflow: hidden; min-height: 20px; }
 .totales-wrap{display:flex;justify-content:flex-end;}
 .totales-box{min-width:320px;border:1.5px solid var(--borde);border-radius:10px;overflow:hidden;}
 .t-row.t-grande{background:var(--verde);color:#fff;display:flex;justify-content:space-between;padding:12px 20px;align-items:center;}
-.t-row input{background:transparent; border:none; color:#fff; text-align:right; font-weight:700; font-size:18px; outline:none; width:150px; font-family:inherit;}
+.t-row input, .t-row .val-clon{background:transparent; border:none; color:#fff; text-align:right; font-weight:700; font-size:18px; outline:none; width:100%; font-family:inherit;}
 
 .cond-texto{font-size:11px;line-height:1.6;color:var(--gris);white-space: pre-line;}
 
@@ -62,7 +60,7 @@ textarea { resize: none; overflow: hidden; min-height: 20px; }
 
 @media print{
   body{background:white;padding:0;}
-  .toolbar, .btn-add, .btn-del-row {display:none!important;}
+  .toolbar{display:none!important;}
 }
 </style>
 </head>
@@ -81,9 +79,7 @@ textarea { resize: none; overflow: hidden; min-height: 20px; }
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 812.6 312.6">
         <g>
           <path class="st0" d="M89.3,226.9c0,3.4,2.1,5.6,5.5,5.6c2.9,0,5.1-2.4,5.1-5.6V123.3c0-14,0-43.6,0-43.6h11.4c0,0,0,0.4,0,1.2l5.3,29.7h0.2l4.8-30.8l0.2,0h11.6c0,0,0,57.7,0,86v61.4c0,2.5,2.1,5.1,4.2,5.2c3.4,0.2,5.9-1.5,6.1-4.5c0.2-3.8,0.2-7.6,0.2-11.4c0-7.9,0-15.7,0-23.6v-92.1c0-8.8,0-17.5,0-26.3c0-3.2-2.1-5.5-5.1-5.5c-14.8,0-29.6,0-44.4,0c-2.6,0-4.6,1.6-4.9,4.1c-0.3,2.4-0.2,4.8-0.2,7.3c0,7.8,0,15.7,0,23.6L89.3,226.9z"/>
-          <path class="st0" d="M117.6,0C52.7,0,0,52.6,0,117.6c0,7,0.6,13.9,1.8,20.6c7.1,40.2,34.6,73.3,71.4,88.3c2,0.1,4.5-2.4,4.5-4.6V74.3c0-3.2-2-5.3-5.2-5.3c-8.3,0-16.6,0-24.9,0c-4.9,0-9.4,3.9-10.4,8.7c-1,5,1.8,10.3,6.4,12.2c7.6,3.1,15.3-2.3,15.3-10.7c0-2.5,0.8-4.6,3.1-5.7c2.1-1.1,4.3-1.1,6.2,0.5c1.9,1.6,2.3,3.7,2.2,6.2c-0.2,4.7-1.6,8.9-4.3,12.6c-4.1,5.6-9.5,8.8-16.4,9.6c-9.6,1.1-18.4-5.1-22.2-13.2c-3.8-8-2-18.4,4.3-24.8c4.6-4.7,10.3-7,16.9-7c9.5,0,18.9,0,28.4,0h106.7c9.7,0,17.6,5.4,21.3,14.3c3.7,9,0.9,19.5-6.9,25.8c-4.2,3.3-9,5.4-14.4,5c-8.4-0.6-15-4.4-19.1-11.9c-2.4-4.3-3.8-9-2.5-14.1c0.7-2.6,3-3.9,6.4-3.6c2.3,0.2,3.8,1.7,4.4,4c0.8,3.1,1.1,6.4,2.5,9.1c1.7,3.4,5.1,5.1,9,4.9c4.9-0.3,8.9-2.7,10.2-7.4c2-7-2.1-14.1-10.2-14.3c-7.8-0.2-15.6-0.1-23.4-0.1c-3.2,0-5.4,2.2-5.4,5.4v118.5c0,7.9-0.1,15.8,0,23.8c0,2.2-0.1,4.7,0.8,6.6c1.3,2.9,4.1,3.5,7.3,2.1l0.2-0.1c7.7-3.3,16-7.7,24-13.3c0.1-0.1,0.1-0.1,0.2-0.1c12-8.9,22.1-20.1,30-32.9c10.9-17.9,17.3-38.9,17.3-61.3C235.2,52.6,182.5,0,117.6,0z M79.5,17.3c6.4,0,12.9,0,19.4,0h23.9c8,0,15.9,0,23.9,0c2.6,0,5.3,0,7.9,0.2c2.7,0.3,4.9,3.2,4.7,5.9c-0.3,3-2.8,5.5-5.6,5.5h-74c-2.7,0-5.4-2.8-5.4-5.6C74.1,20.1,76.6,17.3,79.5,17.3z M176.4,46c-1.2,1.8-2.8,2.9-5.1,2.9c-7.5,0-14.9,0.1-22.4,0.1c-7,0-13.9-0.1-20.9-0.1c-7.8,0-15.7,0-23.5,0H61.9c-3.3,0-6-2.7-6-6c0-2.8,2.9-5.4,6-5.4c2.6,0,5.2,0,7.8,0h76.7c8.1,0,16.2,0.2,24.2-0.1C175.9,37.2,178.7,42.4,176.4,46z"/>
-          <path class="st0" d="M179.4,257.7c-3.1-1.9-6.3-3-10-3.8c-23.3-5.5-55.9,8.1-68.1,13.9c-5.4,2.6-11.3,4.5-17.6,5.4c-3.7,0.6-7.9,0.8-11.5,0c-4.6-1.1-7.8-3.6-7.9-9.9c0-1.2,0.3-2.6,0.6-3.8c0.4-1.7,1.2-3.6,2.5-5.1c5.4-7.3,24.6-13.9,41.4-18.4c3.6-1,5.9-1.2,8.9-1.9c0.3,0,0.6-0.1,0.8-0.2c0.1,0,0.1,0,0.2,0l0,0c1.8-0.7,3.1-2.7,3.1-4.9V113.5l-3,9.6l-2.1,6.4l-2.1-6.4l-3.3-9.5v82.6c0,5.9,0,11.9,0,17.8c-0.4,5.5,1.6,14.7-4.6,17.9c-4.1,1.9-6.1,2.7-10.8,4.3c-1.2,0.4-2.4,0.9-3.6,1.3c-12.4,4.5-24,10.3-28,16.2c-1.1,1.8-2.1,3.7-2.6,5.7c-0.7,3.1-0.4,5.9,0.7,9.1c2.4,6.2,9.3,10.6,16.6,12.3c3,0.7,5.8,1.1,8.7,0.9c6.5-0.6,14.2-2,22.1-4.1c16.1-3.4,34.8-8,52.3-3.8c6.4,1.5,12.4,4.1,18.2,8.2c16.7,11.7,22,28.5,22.5,30.7l2.9-0.2C205.8,312.4,207.4,274.5,179.4,257.7z"/>
-        </g>
+          <path class="st0" d="M117.6,0C52.7,0,0,52.6,0,117.6c0,7,0.6,13.9,1.8,20.6c7.1,40.2,34.6,73.3,71.4,88.3c2,0.1,4.5-2.4,4.5-4.6V74.3c0-3.2-2-5.3-5.2-5.3c-8.3,0-16.6,0-24.9,0c-4.9,0-9.4,3.9-10.4,8.7c-1,5,1.8,10.3,6.4,12.2c7.6,3.1,15.3-2.3,15.3-10.7c0-2.5,0.8-4.6,3.1-5.7c2.1-1.1,4.3-1.1,6.2,0.5c1.9,1.6,2.3,3.7,2.2,6.2c-0.2,4.7-1.6,8.9-4.3,12.6c-4.1,5.6-9.5,8.8-16.4,9.6c-9.6,1.1-18.4-5.1-22.2-13.2c-3.8-8-2-18.4,4.3-24.8c4.6-4.7,10.3-7,16.9-7c9.5,0,18.9,0,28.4,0h106.7c9.7,0,17.6,5.4,21.3,14.3c3.7,9,0.9,19.5-6.9,25.8c-4.2,3.3-9,5.4-14.4,5c-8.4-0.6-15-4.4-19.1-11.9c-2.4-4.3-3.8-9-2.5-14.1c0.7-2.6,3-3.9,6.4-3.6c2.3,0.2,3.8,1.7,4.4,4c0.8,3.1,1.1,6.4,2.5,9.1c1.7,3.4,5.1,5.1,9,4.9c4.9-0.3,8.9-2.7,10.2-7.4c2-7-2.1-14.1-10.2-14.3c-7.8-0.2-15.6-0.1-23.4-0.1c-3.2,0-5.4,2.2-5.4,5.4v118.5c0,7.9-0.1,15.8,0,23.8c0,2.2-0.1,4.7,0.8,6.6c1.3,2.9,4.1,3.5,7.3,2.1l0.2-0.1c7.7-3.3,16-7.7,24-13.3c0.1-0.1,0.1-0.1,0.2-0.1c12-8.9,22.1-20.1,30-32.9c10.9-17.9,17.3-38.9,17.3-61.3C235.2,52.6,182.5,0,117.6,0z M79.5,17.3c6.4,0,12.9,0,19.4,0h23.9c8,0,15.9,0,23.9,0c2.6,0,5.3,0,7.9,0.2c2.7,0.3,4.9,3.2,4.7,5.9c-0.3,3-2.8,5.5-5.6,5.5h-74c-2.7,0-5.4-2.8-5.4-5.6C74.1,20.1,76.6,17.3,79.5,17.3z M176.4,46c-1.2,1.8-2.8,2.9-5.1,2.9c-7.5,0-14.9,0.1-22.4,0.1c-7,0-13.9-0.1-20.9-0.1c-7.8,0-15.7,0-23.5,0H61.9c-3.3,0-6-2.7-6-6c0-2.8,2.9-5.4,6-5.4c2.6,0,5.2,0,7.8,0h76.7c8.1,0,16.2,0.2,24.2-0.1C175.9,37.2,178.7,42.4,176.4,46z"/><path class="st0" d="M179.4,257.7c-3.1-1.9-6.3-3-10-3.8c-23.3-5.5-55.9,8.1-68.1,13.9c-5.4,2.6-11.3,4.5-17.6,5.4c-3.7,0.6-7.9,0.8-11.5,0c-4.6-1.1-7.8-3.6-7.9-9.9c0-1.2,0.3-2.6,0.6-3.8c0.4-1.7,1.2-3.6,2.5-5.1c5.4-7.3,24.6-13.9,41.4-18.4c3.6-1,5.9-1.2,8.9-1.9c0.3,0,0.6-0.1,0.8-0.2c0.1,0,0.1,0,0.2,0l0,0c1.8-0.7,3.1-2.7,3.1-4.9V113.5l-3,9.6l-2.1,6.4l-2.1-6.4l-3.3-9.5v82.6c0,5.9,0,11.9,0,17.8c-0.4,5.5,1.6,14.7-4.6,17.9c-4.1,1.9-6.1,2.7-10.8,4.3c-1.2,0.4-2.4,0.9-3.6,1.3c-12.4,4.5-24,10.3-28,16.2c-1.1,1.8-2.1,3.7-2.6,5.7c-0.7,3.1-0.4,5.9,0.7,9.1c2.4,6.2,9.3,10.6,16.6,12.3c3,0.7,5.8,1.1,8.7,0.9c6.5-0.6,14.2-2,22.1-4.1c16.1-3.4,34.8-8,52.3-3.8c6.4,1.5,12.4,4.1,18.2,8.2c16.7,11.7,22,28.5,22.5,30.7l2.9-0.2C205.8,312.4,207.4,274.5,179.4,257.7z"/></g>
         <g>
           <path class="st0" d="M264.4,141v-36.9h5.6l16.1,26.9h-3l15.9-26.9h5.6l0.1,36.9h-6.6v-26.7h1.3l-13.4,22.5H283l-13.7-22.5h1.6V141z"/>
           <path class="st0" d="M322.5,141.4c-2.1,0-4-0.4-5.5-1.1s-2.8-1.7-3.7-3s-1.3-2.7-1.3-4.3c0-1.6,0.4-3,1.1-4.3c0.8-1.3,2-2.3,3.7-3s4-1.1,6.9-1.1h8.2v4.4h-7.7c-2.2,0-3.7,0.4-4.5,1.1s-1.2,1.6-1.2,2.7c0,1.2,0.5,2.1,1.4,2.8s2.3,1,4,1c1.6,0,3.1-0.4,4.3-1.1s2.2-1.8,2.8-3.3l1,4c-0.6,1.6-1.8,2.9-3.4,3.8C327.1,140.9,325.1,141.4,322.5,141.4z M331.4,141v-5.7l-0.3-1.2v-10c0-1.9-0.6-3.4-1.8-4.5s-3-1.6-5.3-1.6c-1.5,0-3.1,0.2-4.6,0.7s-2.8,1.2-3.9,2.1l-2.6-4.8c1.5-1.2,3.3-2,5.4-2.6s4.2-0.9,6.5-0.9c4.1,0,7.3,1,9.5,3s3.3,5,3.3,9.1V141z M321,109l7.1-7.2h7.8l-9.2,7.2H321z"/>
@@ -223,57 +219,59 @@ async function descargarPDF() {
     const originalDoc = document.getElementById('documento');
     btn.textContent = "⏳ Generando...";
     
-    // Configuración para la captura
     const canvas = await html2canvas(originalDoc, {
         scale: 2,
         useCORS: true,
         backgroundColor: "#ffffff",
-        width: 860, // Ancho fijo para evitar cortes laterales
+        // FORZAMOS ANCHO FIJO DE CAPTURA PARA EVITAR FRANJA BLANCA
+        width: 800, 
         onclone: (clonedDoc) => {
             const clonedContainer = clonedDoc.getElementById('documento');
             
-            // 1. Forzar estilos de impresión en el clon
-            clonedContainer.style.width = "800px"; // Ligeramente menor para margen de seguridad
+            // CONFIGURACIÓN DE LIMPIEZA EN EL CLON
+            clonedContainer.style.width = "800px";
             clonedContainer.style.margin = "0";
             clonedContainer.style.borderRadius = "0";
             clonedContainer.style.boxShadow = "none";
             
-            // 2. Ocultar elementos innecesarios
+            // Ocultar elementos innecesarios
             clonedDoc.querySelector('.btn-add').style.display = 'none';
             clonedDoc.querySelectorAll('.btn-del-row').forEach(b => b.style.display = 'none');
             
             const obsVal = document.getElementById('obs').value.trim();
             if(!obsVal) clonedDoc.getElementById('wrapperObs').style.display = 'none';
 
-            // 3. Convertir Textareas a Divs para que el texto fluya y no se corte
-            clonedDoc.querySelectorAll('textarea').forEach(ta => {
+            // TRANSFORMACIÓN DE TODOS LOS INPUTS Y TEXTAREAS A DIVS (Para PDF limpio)
+            clonedDoc.querySelectorAll('textarea, input').forEach(el => {
                 const div = document.createElement('div');
-                div.className = 'cell-content';
-                div.textContent = ta.value;
-                div.style.minHeight = '1.4em';
-                div.style.paddingBottom = '4px';
-                ta.parentNode.replaceChild(div, ta);
-            });
-
-            // 4. Convertir Inputs a Divs
-            clonedDoc.querySelectorAll('input').forEach(inp => {
-                const div = document.createElement('div');
-                div.className = 'cell-content';
-                div.style.textAlign = getComputedStyle(inp).textAlign;
-                div.style.fontWeight = getComputedStyle(inp).fontWeight;
-                div.textContent = inp.value;
-                inp.parentNode.replaceChild(div, inp);
+                div.className = 'val-clon';
+                div.textContent = el.value || (el.placeholder && !el.value ? "" : el.value);
+                
+                // Mantener alineación de precios
+                if(el.classList.contains('input-precio') || el.id === 'totalInput' || el.classList.contains('header-num-input')) {
+                   div.style.textAlign = 'right';
+                   div.style.fontWeight = '700';
+                }
+                
+                // Estilos para que parezca texto fluido
+                div.style.fontFamily = 'Montserrat, sans-serif';
+                div.style.fontSize = getComputedStyle(el).fontSize;
+                div.style.minHeight = '1.2em';
+                div.style.wordBreak = 'break-word';
+                div.style.whiteSpace = 'pre-wrap';
+                
+                el.parentNode.replaceChild(div, el);
             });
         }
     });
 
-    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const imgData = canvas.toDataURL('image/jpeg', 0.98);
     const { jsPDF } = window.jspdf;
     
-    // Calculamos dimensiones del PDF basadas exactamente en el canvas generado
     const pdfWidth = 210;
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
     
+    // Generamos el PDF con la altura exacta del canvas (sin franjas blancas)
     const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
     pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
     
@@ -291,7 +289,7 @@ function abrirWA() {
 function abrirGmail() {
     const mail = document.getElementById('mailCliente').value;
     const subject = encodeURIComponent(`Presupuesto N°${document.getElementById('inputNumero').value}`);
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${mail}&su=${subject}&body=${body}`, '_blank');
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${mail}&su=${subject}`, '_blank');
 }
 
 function limpiarTodo() { if(confirm("¿Limpiar todo?")) location.reload(); }
